@@ -1,6 +1,6 @@
 {
   "name": "astro",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Aplikacja desktopowa zbudowana z użyciem Electrona",
   "main": "main.js",
   "scripts": {
@@ -80,7 +80,8 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "AstroWorld",
-      "multiLanguageInstaller": false
+      "multiLanguageInstaller": false,
+      "artifactName": "AstroWorld-Setup-${version}.exe"
     },
     "mac": {
       "target": "dmg",
