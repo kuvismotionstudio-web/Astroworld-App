@@ -162,41 +162,7 @@ function updateDownloadProgressBar(progress) {
   }
 }
 
-// Event listeners dla auto-updater
-if (window.api) {
-  // Dostępna aktualizacja
-  window.api.onUpdateAvailable((updateInfo) => {
-    console.log('Dostępna aktualizacja:', updateInfo);
-    showUpdateModal(updateInfo);
-  });
-
-  // Postęp pobierania
-  window.api.onDownloadProgress((progress) => {
-    console.log('Postęp pobierania:', progress.percent + '%');
-    updateDownloadProgressBar(progress);
-  });
-
-  // Aktualizacja pobrana
-  window.api.onUpdateDownloaded((info) => {
-    console.log('Aktualizacja pobrana:', info);
-    const downloadBtn = document.getElementById('updateDownloadBtn');
-    if (downloadBtn) {
-      downloadBtn.textContent = 'Zainstaluj i uruchom ponownie';
-      downloadBtn.disabled = false;
-      downloadBtn.onclick = () => installAppUpdate();
-    }
-    
-    showToast('Aktualizacja pobrana! Kliknij aby zainstalować.', 10000, 'success');
-  });
-
-  // Błąd aktualizacji
-  if (window.api.onUpdateError) {
-    window.api.onUpdateError((error) => {
-      console.error('Błąd aktualizacji:', error);
-      showToast('Błąd podczas sprawdzania aktualizacji: ' + error.message, 5000, 'error');
-    });
-  }
-}
+// Event listeners dla auto-updater będą ustawione w DOMContentLoaded
 
 // Poproś o pozwolenie na powiadomienia przy pierwszym uruchomieniu
 if (window.Notification && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
@@ -1124,10 +1090,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }, duration);
     }
 
-    // Przykład użycia: toast po wejściu do Pomocy (jeśli link istnieje)
-    if (typeof showToast === 'function') {
-        // Jeśli sekcja Pomoc jest pokazywana przez showSection, można wywołać showToast tam
-        // lub dodać wywołanie w obsłudze kliknięcia helpPageLink poniżej (jeśli link wróci)
+    // === AUTO-UPDATER EVENT LISTENERS ===
+    if (window.api) {
+        // Dostępna aktualizacja
+        window.api.onUpdateAvailable((updateInfo) => {
+            console.log('Dostępna aktualizacja:', updateInfo);
+            showUpdateModal(updateInfo);
+        });
+
+        // Postęp pobierania
+        window.api.onDownloadProgress((progress) => {
+            console.log('Postęp pobierania:', progress.percent + '%');
+            updateDownloadProgressBar(progress);
+        });
+
+        // Aktualizacja pobrana
+        window.api.onUpdateDownloaded((info) => {
+            console.log('Aktualizacja pobrana:', info);
+            const downloadBtn = document.getElementById('updateDownloadBtn');
+            if (downloadBtn) {
+                downloadBtn.textContent = 'Zainstaluj i uruchom ponownie';
+                downloadBtn.disabled = false;
+                downloadBtn.onclick = () => installAppUpdate();
+            }
+            
+            showToast('Aktualizacja pobrana! Kliknij aby zainstalować.', 10000, 'success');
+        });
+
+        // Błąd aktualizacji
+        if (window.api.onUpdateError) {
+            window.api.onUpdateError((error) => {
+                console.error('Błąd aktualizacji:', error);
+                showToast('Błąd podczas sprawdzania aktualizacji: ' + error.message, 5000, 'error');
+            });
+        }
     }
     const fileListDiv = document.getElementById('file-list');
     const noFilesMessage = document.getElementById('no-files-message');

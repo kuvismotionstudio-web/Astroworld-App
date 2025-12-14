@@ -55,7 +55,9 @@ Thumbs.db
 # Large asset files (będą w releases)
 # Exclude large assets from git - they'll be in releases
 assets/screenshots/
-covers/
+covers/*.jpg
+covers/*.png
+!covers/placeholder.jpg
 files/
 
 # App specific
