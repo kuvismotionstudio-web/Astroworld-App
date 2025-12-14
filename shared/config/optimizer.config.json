@@ -1,0 +1,13 @@
+{
+  "categories": [
+    { "id": "temp", "name": "Pliki tymczasowe", "description": "Systemowe i aplikacyjne pliki tymczasowe", "safe": true, "icon": "fa-solid fa-trash" },
+    { "id": "recyclebin", "name": "Kosz", "description": "Pliki w Koszu systemowym", "safe": true, "icon": "fa-solid fa-recycle" },
+    { "id": "browsercache", "name": "Cache przeglądarek", "description": "Chrome, Edge, Firefox", "safe": true, "icon": "fa-solid fa-globe" },
+    { "id": "appcache", "name": "Cache aplikacji", "description": "Discord, Steam, Epic, Unreal DDC", "safe": true, "icon": "fa-solid fa-box" },
+    { "id": "autostart", "name": "Autostart", "description": "Podgląd i zarządzanie autostartem", "safe": true, "icon": "fa-solid fa-rocket" },
+    { "id": "registry", "name": "Rejestr – sieroty", "description": "Nieistniejące ścieżki w Run/Uninstall/ContextMenu/Services", "safe": true, "icon": "fa-solid fa-database" }
+  ],
+  "advanced": [
+    { "id": "danger", "name": "Zaawansowane/ryzykowne", "description": "Dodatkowe, potencjalnie ryzykowne czyszczenie", "safe": false, "icon": "fa-solid fa-skull-crossbones" }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "astro",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Aplikacja desktopowa zbudowana z użyciem Electrona",
   "main": "main.js",
   "scripts": {

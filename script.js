@@ -113,13 +113,26 @@ function showUpdateModal(updateInfo) {
   const downloadBtn = document.getElementById('updateDownloadBtn');
   
   if (modal && modalInfo && downloadBtn) {
-    modalInfo.textContent = `Dostępna jest nowa wersja ${updateInfo.version}`;
+    modalInfo.innerHTML = `Dostępna jest <strong>wersja ${updateInfo.version}</strong>`;
     
     if (changelog && updateInfo.releaseNotes) {
-      changelog.innerHTML = `<h4>Co nowego:</h4><p>${updateInfo.releaseNotes}</p>`;
+      const changelogContent = changelog.querySelector('.changelog-content');
+      if (changelogContent) {
+        changelogContent.innerHTML = updateInfo.releaseNotes || 'Nowa wersja z ulepszeniami i poprawkami błędów.';
+      }
+    } else {
+      const changelogContent = changelog.querySelector('.changelog-content');
+      if (changelogContent) {
+        changelogContent.innerHTML = '• Ulepszenia wydajności<br>• Poprawki błędów<br>• Nowe funkcje';
+      }
     }
     
-    downloadBtn.textContent = 'Pobierz aktualizację';
+    // Reset button state
+    const btnIcon = downloadBtn.querySelector('i');
+    const btnText = downloadBtn.querySelector('span');
+    if (btnIcon) btnIcon.className = 'fas fa-download';
+    if (btnText) btnText.textContent = 'Pobierz aktualizację';
+    downloadBtn.disabled = false;
     downloadBtn.onclick = () => downloadAppUpdate();
     
     modal.classList.remove('hidden');
@@ -131,9 +144,18 @@ function showUpdateModal(updateInfo) {
 async function downloadAppUpdate() {
   try {
     const downloadBtn = document.getElementById('updateDownloadBtn');
+    const progressDiv = document.getElementById('updateProgress');
+    
     if (downloadBtn) {
-      downloadBtn.textContent = 'Pobieranie...';
+      const btnIcon = downloadBtn.querySelector('i');
+      const btnText = downloadBtn.querySelector('span');
+      if (btnIcon) btnIcon.className = 'fas fa-spinner fa-spin';
+      if (btnText) btnText.textContent = 'Pobieranie...';
       downloadBtn.disabled = true;
+    }
+    
+    if (progressDiv) {
+      progressDiv.classList.remove('hidden');
     }
     
     await window.api.downloadAppUpdate();
@@ -141,6 +163,16 @@ async function downloadAppUpdate() {
   } catch (error) {
     console.error('Błąd pobierania aktualizacji:', error);
     showToast('Błąd podczas pobierania aktualizacji', 3000, 'error');
+    
+    // Reset button on error
+    const downloadBtn = document.getElementById('updateDownloadBtn');
+    if (downloadBtn) {
+      const btnIcon = downloadBtn.querySelector('i');
+      const btnText = downloadBtn.querySelector('span');
+      if (btnIcon) btnIcon.className = 'fas fa-download';
+      if (btnText) btnText.textContent = 'Pobierz aktualizację';
+      downloadBtn.disabled = false;
+    }
   }
 }
 
@@ -156,9 +188,25 @@ async function installAppUpdate() {
 
 // Funkcja do aktualizacji paska postępu
 function updateDownloadProgressBar(progress) {
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
   const downloadBtn = document.getElementById('updateDownloadBtn');
+  
+  if (progressFill) {
+    progressFill.style.width = `${progress.percent}%`;
+  }
+  
+  if (progressText) {
+    const mbTransferred = (progress.transferred / 1024 / 1024).toFixed(1);
+    const mbTotal = (progress.total / 1024 / 1024).toFixed(1);
+    progressText.textContent = `Pobieranie... ${progress.percent}% (${mbTransferred}MB / ${mbTotal}MB)`;
+  }
+  
   if (downloadBtn) {
-    downloadBtn.textContent = `Pobieranie... ${progress.percent}%`;
+    const btnText = downloadBtn.querySelector('span');
+    if (btnText) {
+      btnText.textContent = `Pobieranie... ${progress.percent}%`;
+    }
   }
 }
 
@@ -1108,10 +1156,22 @@ document.addEventListener('DOMContentLoaded', () => {
         window.api.onUpdateDownloaded((info) => {
             console.log('Aktualizacja pobrana:', info);
             const downloadBtn = document.getElementById('updateDownloadBtn');
+            const progressDiv = document.getElementById('updateProgress');
+            
             if (downloadBtn) {
-                downloadBtn.textContent = 'Zainstaluj i uruchom ponownie';
+                const btnIcon = downloadBtn.querySelector('i');
+                const btnText = downloadBtn.querySelector('span');
+                if (btnIcon) btnIcon.className = 'fas fa-rocket';
+                if (btnText) btnText.textContent = 'Zainstaluj i uruchom ponownie';
                 downloadBtn.disabled = false;
                 downloadBtn.onclick = () => installAppUpdate();
+            }
+            
+            if (progressDiv) {
+                const progressFill = document.getElementById('progressFill');
+                const progressText = document.getElementById('progressText');
+                if (progressFill) progressFill.style.width = '100%';
+                if (progressText) progressText.textContent = 'Pobieranie zakończone! ✅';
             }
             
             showToast('Aktualizacja pobrana! Kliknij aby zainstalować.', 10000, 'success');

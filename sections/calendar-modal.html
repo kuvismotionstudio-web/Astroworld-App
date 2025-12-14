@@ -1,0 +1,53 @@
+<!-- Modal szczegółów gry z kalendarza premier -->
+<div id="calendarGameModal" class="game-details-modal hidden">
+  <button class="close-button" onclick="document.getElementById('calendarGameModal').classList.add('hidden');document.getElementById('calendarModalOverlay').classList.add('hidden');">×</button>
+  <div class="modal-header">
+    <h2 id="calendarModalGameTitle"></h2>
+    <p id="calendarModalGameDescription"></p>
+  </div>
+  <div class="modal-main-content">
+    <div class="modal-media">
+      <div class="video-container">
+        <div id="calendarModalGameTrailer"></div>
+      </div>
+      <div id="calendarModalGameScreenshots" class="screenshots-container"></div>
+    </div>
+    <div class="modal-details">
+      <div class="modal-section">
+        <h3>Wymagania systemowe</h3>
+        <div class="modal-info-grid">
+          <div>
+            <p class="modal-label">Minimalne:</p>
+            <span id="calendarModalMinRequirements"></span>
+          </div>
+          <div>
+            <p class="modal-label">Zalecane:</p>
+            <span id="calendarModalRecRequirements"></span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-info-grid modal-meta-grid">
+        <div>
+          <p class="modal-label">Deweloper:</p>
+          <span id="calendarModalGameDeveloper"></span>
+        </div>
+        <div>
+          <p class="modal-label">Wydawca:</p>
+          <span id="calendarModalGamePublisher"></span>
+        </div>
+        <div>
+          <p class="modal-label">Data wydania:</p>
+          <span id="calendarModalGameReleaseDate"></span>
+        </div>
+        <div>
+          <p class="modal-label">Platformy:</p>
+          <span id="calendarModalGamePlatforms"></span>
+        </div>
+      </div>
+      <a class="download-button modal-download-button disabled" style="pointer-events:none;opacity:0.7;">
+        <i class="fas fa-clock"></i> Już wkrótce
+      </a>
+    </div>
+  </div>
+</div>
+<div id="calendarModalOverlay" class="modal-overlay hidden" onclick="document.getElementById('calendarGameModal').classList.add('hidden');this.classList.add('hidden');"></div>
