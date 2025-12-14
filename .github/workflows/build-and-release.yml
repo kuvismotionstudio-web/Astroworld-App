@@ -8,11 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    
-    strategy:
-      matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: windows-latest
     
     steps:
       - name: Checkout code
@@ -35,7 +31,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: dist-${{ matrix.os }}
+          name: dist-windows
           path: dist/
           retention-days: 5
           
@@ -53,17 +49,13 @@ jobs:
         
       - name: Compress artifacts
         run: |
-          cd dist-windows-latest && zip -r ../AstroWorld-Windows.zip . && cd ..
-          cd dist-macos-latest && zip -r ../AstroWorld-macOS.zip . && cd ..
-          cd dist-ubuntu-latest && zip -r ../AstroWorld-Linux.zip . && cd ..
+          cd dist-windows && powershell Compress-Archive -Path * -DestinationPath ../AstroWorld-Windows.zip && cd ..
           
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
             AstroWorld-Windows.zip
-            AstroWorld-macOS.zip
-            AstroWorld-Linux.zip
           draft: false
           prerelease: false
           generate_release_notes: true
