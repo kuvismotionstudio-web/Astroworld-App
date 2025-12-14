@@ -111,19 +111,21 @@ function showUpdateModal(updateInfo) {
   const modalInfo = document.getElementById('updateModalInfo');
   const changelog = document.getElementById('updateChangelog');
   const downloadBtn = document.getElementById('updateDownloadBtn');
+  const modalContent = modal?.querySelector('.update-modal-content');
   
   if (modal && modalInfo && downloadBtn) {
     modalInfo.innerHTML = `Dostępna jest <strong>wersja ${updateInfo.version}</strong>`;
     
+    // Cyberpunk changelog content
     if (changelog && updateInfo.releaseNotes) {
       const changelogContent = changelog.querySelector('.changelog-content');
       if (changelogContent) {
-        changelogContent.innerHTML = updateInfo.releaseNotes || 'Nowa wersja z ulepszeniami i poprawkami błędów.';
+        changelogContent.innerHTML = updateInfo.releaseNotes || 'SYSTEM_UPDATE.exe<br>• Enhanced performance protocols<br>• Security patches applied<br>• New neural interfaces';
       }
     } else {
       const changelogContent = changelog.querySelector('.changelog-content');
       if (changelogContent) {
-        changelogContent.innerHTML = '• Ulepszenia wydajności<br>• Poprawki błędów<br>• Nowe funkcje';
+        changelogContent.innerHTML = 'SYSTEM_UPDATE.exe<br>• Enhanced performance protocols<br>• Security patches applied<br>• New neural interfaces<br>• Bug fixes and optimizations';
       }
     }
     
@@ -131,9 +133,17 @@ function showUpdateModal(updateInfo) {
     const btnIcon = downloadBtn.querySelector('i');
     const btnText = downloadBtn.querySelector('span');
     if (btnIcon) btnIcon.className = 'fas fa-download';
-    if (btnText) btnText.textContent = 'Pobierz aktualizację';
+    if (btnText) btnText.textContent = 'Initialize Download';
     downloadBtn.disabled = false;
     downloadBtn.onclick = () => downloadAppUpdate();
+    
+    // Add cyberpunk glitch effect
+    if (modalContent) {
+      setTimeout(() => {
+        modalContent.classList.add('glitch');
+        setTimeout(() => modalContent.classList.remove('glitch'), 300);
+      }, 500);
+    }
     
     modal.classList.remove('hidden');
     isUpdateAvailable = true;
@@ -150,7 +160,7 @@ async function downloadAppUpdate() {
       const btnIcon = downloadBtn.querySelector('i');
       const btnText = downloadBtn.querySelector('span');
       if (btnIcon) btnIcon.className = 'fas fa-spinner fa-spin';
-      if (btnText) btnText.textContent = 'Pobieranie...';
+      if (btnText) btnText.innerHTML = 'Downloading<span class="cyberpunk-loading">...</span>';
       downloadBtn.disabled = true;
     }
     
@@ -199,13 +209,13 @@ function updateDownloadProgressBar(progress) {
   if (progressText) {
     const mbTransferred = (progress.transferred / 1024 / 1024).toFixed(1);
     const mbTotal = (progress.total / 1024 / 1024).toFixed(1);
-    progressText.textContent = `Pobieranie... ${progress.percent}% (${mbTransferred}MB / ${mbTotal}MB)`;
+    progressText.textContent = `DOWNLOADING... ${progress.percent}% [${mbTransferred}MB / ${mbTotal}MB]`;
   }
   
   if (downloadBtn) {
     const btnText = downloadBtn.querySelector('span');
     if (btnText) {
-      btnText.textContent = `Pobieranie... ${progress.percent}%`;
+      btnText.innerHTML = `Downloading... ${progress.percent}%<span class="cyberpunk-loading">...</span>`;
     }
   }
 }
@@ -1162,7 +1172,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const btnIcon = downloadBtn.querySelector('i');
                 const btnText = downloadBtn.querySelector('span');
                 if (btnIcon) btnIcon.className = 'fas fa-rocket';
-                if (btnText) btnText.textContent = 'Zainstaluj i uruchom ponownie';
+                if (btnText) btnText.textContent = 'Execute & Restart';
                 downloadBtn.disabled = false;
                 downloadBtn.onclick = () => installAppUpdate();
             }
@@ -1171,7 +1181,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const progressFill = document.getElementById('progressFill');
                 const progressText = document.getElementById('progressText');
                 if (progressFill) progressFill.style.width = '100%';
-                if (progressText) progressText.textContent = 'Pobieranie zakończone! ✅';
+                if (progressText) progressText.textContent = 'DOWNLOAD COMPLETE ✅ READY TO INSTALL';
             }
             
             showToast('Aktualizacja pobrana! Kliknij aby zainstalować.', 10000, 'success');
