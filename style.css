@@ -5636,8 +5636,7 @@ body.modal-open {
 
 .update-modal-content {
     position: relative;
-    background: 
-        linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 25%, #000000 50%, #1a0a0a 75%, #0a0a0a 100%);
+    background: #000000;
     border: 2px solid #ff0000;
     border-radius: 15px;
     padding: 0;
@@ -5734,9 +5733,7 @@ body.modal-open {
 .update-header {
     text-align: center;
     padding: 40px 30px 25px;
-    background: 
-        linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%),
-        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 0, 0, 0.03) 2px, rgba(255, 0, 0, 0.03) 4px);
+    background: #000000;
     border-bottom: 2px solid #ff0000;
     position: relative;
     overflow: hidden;
@@ -5853,14 +5850,7 @@ body.modal-open {
 
 .update-body {
     padding: 30px;
-    background: 
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 20px,
-            rgba(255, 0, 0, 0.02) 20px,
-            rgba(255, 0, 0, 0.02) 21px
-        );
+    background: #000000;
 }
 
 .update-changelog {
@@ -5882,8 +5872,7 @@ body.modal-open {
 }
 
 .changelog-content {
-    background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 0, 0, 0.6) 100%);
+    background: #000000;
     border: 1px solid #ff0000;
     border-radius: 8px;
     padding: 20px;
@@ -5920,8 +5909,7 @@ body.modal-open {
 .progress-bar {
     width: 100%;
     height: 12px;
-    background: 
-        linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 0, 0, 0.6) 100%);
+    background: #000000;
     border: 1px solid #ff0000;
     border-radius: 6px;
     overflow: hidden;
@@ -5995,8 +5983,7 @@ body.modal-open {
     display: flex;
     gap: 20px;
     justify-content: center;
-    background: 
-        linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 0, 0, 0.7) 100%);
+    background: #000000;
     border-top: 2px solid #ff0000;
 }
 

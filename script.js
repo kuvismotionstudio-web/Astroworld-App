@@ -189,6 +189,8 @@ async function downloadAppUpdate() {
 // Funkcja do instalacji aktualizacji
 async function installAppUpdate() {
   try {
+    console.log('🚀 Rozpoczynam instalację aktualizacji...');
+    showToast('Instalowanie aktualizacji...', 2000, 'info');
     await window.api.installAppUpdate();
   } catch (error) {
     console.error('Błąd instalacji aktualizacji:', error);
@@ -374,11 +376,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // === OBSŁUGA MODALA AKTUALIZACJI ===
     const updateModal = document.getElementById('updateModal');
-    const closeUpdateModalBtn = document.querySelector('.close-update-modal');
+    const closeUpdateModalBtns = document.querySelectorAll('.close-update-modal');
     
-    if (closeUpdateModalBtn && updateModal) {
-        closeUpdateModalBtn.addEventListener('click', () => {
-            updateModal.classList.add('hidden');
+    if (closeUpdateModalBtns.length > 0 && updateModal) {
+        closeUpdateModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                updateModal.classList.add('hidden');
+            });
         });
         
         // Zamknij modal po kliknięciu w tło
