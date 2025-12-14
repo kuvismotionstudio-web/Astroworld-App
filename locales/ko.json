@@ -1,0 +1,96 @@
+{
+  "common": {
+    "home": "홈",
+    "about": "정보",
+    "settings": "설정",
+    "search": "검색...",
+    "download": "다운로드",
+    "details": "세부 정보",
+    "close": "닫기",
+    "cancel": "취소",
+    "save": "저장",
+    "loading": "로드 중...",
+    "error": "오류",
+    "success": "성공",
+    "warning": "경고",
+    "appTitle": "개인 파일 서버",
+    "appSubtitle": "당신의 개인 파일 서버",
+    "language": "ko"
+  },
+  "sidebar": {
+    "home": "홈",
+    "calendar": "출시 일정",
+    "upload": "파일 업로드",
+    "settings": "설정",
+    "about": "정보",
+    "freeToPlay": "무료 게임",
+    "dashboard": "대시보드",
+    "games": "게임",
+    "library": "라이브러리",
+    "downloads": "다운로드",
+    "favorites": "즐겨찾기",
+    "help": "도움말"
+  },
+  "updateModal": {
+    "title": "Astroworld의 새 버전!",
+    "available": "새 버전의 애플리케이션을 사용할 수 있습니다.",
+    "download": "다운로드 및 설치"
+  },
+  "freeToPlay": {
+    "title": "무료 게임",
+    "searchPlaceholder": "게임 검색..."
+  },
+  "categories": {
+    "all": "모든 카테고리"
+  },
+  "about": {
+    "title": "Astroworld 정보",
+    "welcome": "<strong>Astroworld 🌎</strong>에 오신 것을 환영합니다, 당신의 개인 파일 관리 센터!",
+    "disclaimer": "참고: 애플리케이션은 아직 개발 중입니다!"
+  },
+  "settings": {
+    "appearance": "모양",
+    "theme": "테마",
+    "darkMode": "다크 모드",
+    "lightMode": "라이트 모드",
+    "language": "언어",
+    "interfaceAnimations": "인터페이스 애니메이션",
+    "enableAnimations": "애니메이션 활성화",
+    "notifications": "알림",
+    "enableNotifications": "알림 활성화",
+    "advanced": "고급",
+    "clearCache": "캐시 지우기",
+    "resetSettings": "설정 초기화"
+  },
+  "game": {
+    "play": "실행",
+    "install": "설치",
+    "uninstall": "제거",
+    "launching": "실행 중...",
+    "installing": "설치 중...",
+    "uninstalling": "제거 중...",
+    "updateAvailable": "업데이트 가능",
+    "updating": "업데이트 중...",
+    "version": "버전",
+    "size": "크기",
+    "lastPlayed": "마지막 플레이",
+    "playtime": "플레이 시간"
+  },
+  "downloads": {
+    "active": "활성 다운로드",
+    "completed": "완료됨",
+    "paused": "일시 정지됨",
+    "speed": "속도",
+    "status": "상태",
+    "progress": "진행률",
+    "timeRemaining": "남은 시간",
+    "downloads": "다운로드"
+  },
+  "notifications": {
+    "gameInstalled": "{game}이(가) 성공적으로 설치되었습니다",
+    "gameUninstalled": "{game}이(가) 제거되었습니다",
+    "updateAvailable": "{game}에 대한 업데이트가 있습니다",
+    "downloadComplete": "다운로드 완료: {file}",
+    "downloadFailed": "다운로드 실패: {file}"
+  }
+}

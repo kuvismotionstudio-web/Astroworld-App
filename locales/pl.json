@@ -1,0 +1,98 @@
+{
+  "common": {
+    "home": "Strona Główna",
+    "about": "O Programie",
+    "settings": "Ustawienia",
+    "search": "Szukaj...",
+    "download": "Pobierz",
+    "details": "Szczegóły",
+    "close": "Zamknij",
+    "cancel": "Anuluj",
+    "save": "Zapisz",
+    "loading": "Ładowanie...",
+    "error": "Błąd",
+    "success": "Sukces",
+    "warning": "Ostrzeżenie",
+    "appTitle": "Prywatny Serwer Plików",
+    "appSubtitle": "Twój prywatny serwer plików",
+    "language": "pl",
+    "language_en": "Angielski",
+    "language_pl": "Polski"
+  },
+  "sidebar": {
+    "home": "Strona Główna",
+    "calendar": "Kalendarz Premier",
+    "upload": "Wyślij Pliki",
+    "settings": "Ustawienia",
+    "about": "O Programie",
+    "freeToPlay": "Za Darmo",
+    "dashboard": "Panel Główny",
+    "games": "Gry",
+    "library": "Biblioteka",
+    "downloads": "Pobrane",
+    "favorites": "Ulubione",
+    "help": "Pomoc"
+  },
+  "updateModal": {
+    "title": "Nowa wersja Astroworld!",
+    "available": "Dostępna jest nowa wersja aplikacji.",
+    "download": "Pobierz i zainstaluj"
+  },
+  "freeToPlay": {
+    "title": "Za Darmo",
+    "searchPlaceholder": "Szukaj gier..."
+  },
+  "categories": {
+    "all": "Wszystkie kategorie"
+  },
+  "about": {
+    "title": "O programie Astroworld",
+    "welcome": "Witaj w <strong>Astroworld 🌎</strong>, Twoim prywatnym centrum zarządzania plikami!",
+    "disclaimer": "Uwaga: aplikacja jest jeszcze w trakcie rozwoju!"
+  },
+  "settings": {
+    "appearance": "Wygląd",
+    "theme": "Motyw",
+    "darkMode": "Tryb Ciemny",
+    "lightMode": "Tryb Jasny",
+    "language": "Język",
+    "interfaceAnimations": "Animacje Interfejsu",
+    "enableAnimations": "Włącz Animacje",
+    "notifications": "Powiadomienia",
+    "enableNotifications": "Włącz Powiadomienia",
+    "advanced": "Zaawansowane",
+    "clearCache": "Wyczyść Pamięć Podręczną",
+    "resetSettings": "Przywróć Ustawienia Domyślne"
+  },
+  "game": {
+    "play": "Graj",
+    "install": "Zainstaluj",
+    "uninstall": "Odinstaluj",
+    "launching": "Uruchamianie...",
+    "installing": "Instalowanie...",
+    "uninstalling": "Odinstalowywanie...",
+    "updateAvailable": "Dostępna Aktualizacja",
+    "updating": "Aktualizowanie...",
+    "version": "Wersja",
+    "size": "Rozmiar",
+    "lastPlayed": "Ostatnio Grano",
+    "playtime": "Czas Gry"
+  },
+  "downloads": {
+    "active": "Aktywne Pobieranie",
+    "completed": "Zakończone",
+    "paused": "Wstrzymane",
+    "speed": "Prędkość",
+    "status": "Status",
+    "progress": "Postęp",
+    "timeRemaining": "Pozostały Czas",
+    "downloads": "Pobrane"
+  },
+  "notifications": {
+    "gameInstalled": "Gra {game} została zainstalowana pomyślnie",
+    "gameUninstalled": "Gra {game} została odinstalowana",
+    "updateAvailable": "Dostępna aktualizacja gry {game}",
+    "downloadComplete": "Pobieranie zakończone: {file}",
+    "downloadFailed": "Błąd pobierania: {file}"
+  }
+}

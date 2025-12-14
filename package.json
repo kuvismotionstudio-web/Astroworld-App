@@ -1,0 +1,95 @@
+{
+  "name": "astro",
+  "version": "1.0.0",
+  "description": "Aplikacja desktopowa zbudowana z użyciem Electrona",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:fix": "npm run lint:js:fix && npm run lint:css:fix",
+    "lint:js": "eslint . --ext .js,.html --config .eslintrc.json",
+    "lint:js:fix": "eslint . --ext .js,.html --config .eslintrc.json --fix",
+    "lint:css": "stylelint \"**/*.{css,scss}\"",
+    "lint:css:fix": "stylelint \"**/*.{css,scss}\" --fix",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "build": "electron-builder --win",
+    "publish": "electron-builder --publish=always",
+    "release": "npm version patch && git push && git push --tags"
+  },
+  "keywords": [],
+  "author": "Twój Autor",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^31.0.1",
+    "electron-builder": "^24.13.3",
+    "eslint": "^9.4.0",
+    "eslint-plugin-html": "^8.1.3",
+    "stylelint": "^16.6.1",
+    "stylelint-config-recommended": "^17.0.0"
+  },
+  "dependencies": {
+    "@lottiefiles/lottie-player": "^2.0.12",
+    "@types/react": "^19.1.10",
+    "aos": "^2.3.4",
+    "color": "^4.2.3",
+    "cors": "^2.8.5",
+    "discord-rpc": "^4.0.1",
+    "electron-updater": "^6.6.2",
+    "express": "^5.1.0",
+    "gsap": "^3.13.0",
+    "i18next": "^23.7.6",
+    "lottie-web": "^5.13.0",
+    "sharp": "^0.34.3",
+    "tsparticles": "^3.8.1",
+    "webtorrent": "^2.8.4"
+  },
+  "build": {
+    "appId": "com.twojaNazwaFirmy.astroapp",
+    "productName": "AstroWorld",
+    "copyright": "Copyright © 2025 Twój Autor",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/*/{test,__tests__,examples}/**/*",
+      "!**/*.map",
+      "!dist/**/*",
+      "!.git/**/*",
+      "!.github/**/*",
+      "!*.md",
+      "!.eslintrc.json",
+      "!.stylelintrc.json"
+    ],
+    "publish": {
+      "provider": "github",
+      "owner": "kuvismotionstudio-web",
+      "repo": "Astroworld-App"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "AstroWorld",
+      "multiLanguageInstaller": false
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "build/icon.png"
+    }
+  },
+  "type": "commonjs"
+}

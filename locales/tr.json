@@ -1,0 +1,96 @@
+{
+  "common": {
+    "home": "Ana Sayfa",
+    "about": "Hakkında",
+    "settings": "Ayarlar",
+    "search": "Ara...",
+    "download": "İndir",
+    "details": "Detaylar",
+    "close": "Kapat",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "warning": "Uyarı",
+    "appTitle": "Özel Dosya Sunucusu",
+    "appSubtitle": "Kişisel dosya sunucunuz",
+    "language": "tr"
+  },
+  "sidebar": {
+    "home": "Ana Sayfa",
+    "calendar": "Yayın Takvimi",
+    "upload": "Dosya Yükle",
+    "settings": "Ayarlar",
+    "about": "Hakkında",
+    "freeToPlay": "Ücretsiz Oyunlar",
+    "dashboard": "Gösterge Paneli",
+    "games": "Oyunlar",
+    "library": "Kütüphane",
+    "downloads": "İndirilenler",
+    "favorites": "Favoriler",
+    "help": "Yardım"
+  },
+  "updateModal": {
+    "title": "Astroworld'in Yeni Sürümü!",
+    "available": "Uygulamanın yeni bir sürümü mevcut.",
+    "download": "İndir ve Yükle"
+  },
+  "freeToPlay": {
+    "title": "Ücretsiz Oyunlar",
+    "searchPlaceholder": "Oyun ara..."
+  },
+  "categories": {
+    "all": "Tüm Kategoriler"
+  },
+  "about": {
+    "title": "Astroworld Hakkında",
+    "welcome": "<strong>Astroworld 🌎</strong>'e hoş geldiniz, kişisel dosya yönetim merkeziniz!",
+    "disclaimer": "Not: uygulama hala geliştirme aşamasındadır!"
+  },
+  "settings": {
+    "appearance": "Görünüm",
+    "theme": "Tema",
+    "darkMode": "Karanlık Mod",
+    "lightMode": "Aydınlık Mod",
+    "language": "Dil",
+    "interfaceAnimations": "Arayüz Animasyonları",
+    "enableAnimations": "Animasyonları Etkinleştir",
+    "notifications": "Bildirimler",
+    "enableNotifications": "Bildirimleri Etkinleştir",
+    "advanced": "Gelişmiş",
+    "clearCache": "Önbelleği Temizle",
+    "resetSettings": "Ayarları Sıfırla"
+  },
+  "game": {
+    "play": "Oyna",
+    "install": "Yükle",
+    "uninstall": "Kaldır",
+    "launching": "Başlatılıyor...",
+    "installing": "Yükleniyor...",
+    "uninstalling": "Kaldırılıyor...",
+    "updateAvailable": "Güncelleme Mevcut",
+    "updating": "Güncelleniyor...",
+    "version": "Sürüm",
+    "size": "Boyut",
+    "lastPlayed": "Son Oynanma",
+    "playtime": "Oynama Süresi"
+  },
+  "downloads": {
+    "active": "Aktif İndirmeler",
+    "completed": "Tamamlandı",
+    "paused": "Duraklatıldı",
+    "speed": "Hız",
+    "status": "Durum",
+    "progress": "İlerleme",
+    "timeRemaining": "Kalan Süre",
+    "downloads": "İndirmeler"
+  },
+  "notifications": {
+    "gameInstalled": "{game} başarıyla yüklendi",
+    "gameUninstalled": "{game} kaldırıldı",
+    "updateAvailable": "{game} için güncelleme mevcut",
+    "downloadComplete": "İndirme tamamlandı: {file}",
+    "downloadFailed": "İndirme başarısız: {file}"
+  }
+}

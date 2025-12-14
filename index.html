@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="common.appTitle">Prywatny Serwer Plików</title>
+  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap">
+
+ <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/chart.js; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com https://media.rawg.io https://cdn.cloudflare.steamstatic.com https://image.api.playstation.com https://via.placeholder.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; child-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; connect-src 'self' https://astroworld.dev;">
+  
+  <!-- Dodane style dla animacji -->
+
+    </head>
+<body>
+    <!-- === ANIMOWANE TŁO === -->
+    <div id="animated-bg">
+        <div id="stars1"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+    </div>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button onclick="window.api.changeLanguage('pl')" class="lang-btn" data-lang="pl">PL</button>
+        <span class="lang-separator">|</span>
+        <button onclick="window.api.changeLanguage('en')" class="lang-btn" data-lang="en">EN</button>
+    </div>
+    
+    <!-- === ASTROWORLD PROFESSIONAL INTRO === -->
+    <div id="astroIntro" class="astro-intro">
+      <div class="astro-intro-bg"></div>
+      <div class="astro-intro-content">
+        <div class="astro-logo-glow">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="48" stroke="#00cfff" stroke-width="6" fill="#232946"/>
+            <circle cx="60" cy="60" r="36" stroke="#a259ff" stroke-width="3" fill="none"/>
+            <circle cx="60" cy="60" r="24" stroke="#ff0033" stroke-width="2" fill="none"/>
+            <circle cx="60" cy="60" r="8" fill="#00cfff"/>
+          </svg>
+        </div>
+        <h1 class="astro-intro-title" data-i18n="common.appTitle">ASTROWORLD</h1>
+        <p class="astro-intro-sub" data-i18n="common.appSubtitle">Twój prywatny serwer plików</p>
+      </div>
+    </div>
+    <!-- === END ASTROWORLD INTRO === -->
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="icon.ico" alt="Menu" style="width:152px;height:152px;display:block;margin:0 auto;">
+                <div id="sidebar-clock"></div>
+                <p id="sidebar-greeting" class="sidebar-greeting hidden"></p>
+            </div>
+            <nav class="sidebar-nav">
+        <ul>
+          <li><a href="#" class="sidebar-link active" id="homeLink" data-i18n="sidebar.home"><i class="fas fa-home"></i> Strona Główna</a></li>
+          <li><a href="#" class="sidebar-link" id="uploadAppOpenBtn" data-i18n="sidebar.upload"><i class="fas fa-upload"></i> Upload Plików</a></li>
+          <li><a href="#" class="sidebar-link" id="settingsProgramLink" data-i18n="sidebar.settings"><i class="fas fa-cogs"></i> Ustawienia</a></li>
+          <li><a href="#" class="sidebar-link" id="aboutProgramLink" data-i18n="sidebar.about"><i class="fas fa-info-circle"></i> O Programie</a></li>
+        </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="https://discord.gg/UBhtYzNu" target="_blank" title="Dołącz do Discorda" style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background:#1a0000;border-radius:8px;margin-bottom:10px;margin-top:2px;text-decoration:none;">
+                  <i class="fab fa-discord" style="font-size:1.7em;color:#ff2222;text-shadow:0 0 8px #ff222288,0 0 2px #fff;"></i>
+                </a>
+                <p style="font-size: 0.7em; margin: 3px 0; color: #ffffff;">Wersja 1.0.0</p>
+                <p style="font-size: 0.7em; margin: 3px 0 8px 0; color: #ffffff;">© 2025 Astroworld</p>
+            </div>
+        </aside>
+
+        <div class="content-area">
+            <div class="container">
+            <div id="updateModal" class="update-modal hidden">
+                <div class="update-modal-content">
+                    <button class="close-update-modal" title="Zamknij">×</button>
+                    <h2 data-i18n="updateModal.title">Nowa wersja Astroworld!</h2>
+                    <p id="updateModalInfo" data-i18n="updateModal.available">Dostępna jest nowa wersja aplikacji.</p>
+                    <div id="updateChangelog" class="update-changelog"></div>
+                    <a id="updateDownloadBtn" href="#" target="_blank" class="update-download-btn" data-i18n="updateModal.download">Pobierz i zainstaluj</a>
+                </div>
+            </div>
+            <!-- Free to Play Section -->
+            <div id="freeToPlayPage" class="page-section hidden">
+                <h1 class="astroworld-fancy" data-i18n="freeToPlay.title">Free to Play</h1>
+                <div class="controls">
+                    <input type="text" id="freeToPlaySearch" class="search-input" placeholder="Wyszukaj gry..." data-i18n="freeToPlay.searchPlaceholder" data-i18n-placeholder>
+                    <select id="freeToPlayCategory" class="category-select">
+                        <option value="all" data-i18n="categories.all">Wszystkie kategorie</option>
+                        <option value="fps">FPS</option>
+                        <option value="moba">MOBA</option>
+                        <option value="battle-royale">Battle Royale</option>
+                        <option value="mmorpg">MMORPG</option>
+                        <option value="sport">Sport</option>
+                    </select>
+                    <select id="freeToPlaySort" class="sort-select">
+                        <option value="name-asc">Nazwa (A-Z)</option>
+                        <option value="name-desc">Nazwa (Z-A)</option>
+                        <option value="popularity">Popularność</option>
+                    </select>
+                </div>
+                <div id="freeToPlayLoading" class="loading-indicator hidden">
+                    <i class="fas fa-spinner fa-spin"></i> Ładowanie gier...
+                </div>
+                <div id="freeToPlayList" class="file-list">
+                    <!-- Games will be loaded here by JavaScript -->
+                </div>
+                <div id="noFreeToPlayMessage" class="info-message hidden">Brak gier do wyświetlenia.</div>
+            </div>
+
+            <!-- Kontener na główną zawartość (lista gier) -->
+            <div id="mainContentContainer" class="page-section">
+                <h1 class="astroworld-fancy">ASTROWORLD</h1>
+                <p id="welcomeMessage" class="welcome-message"></p>
+                <p class="welcome-message thank-you-message-animated" style="font-size: 0.9em; margin-top: -15px; margin-bottom: 25px; opacity: 0;">Dziękujemy, że jesteś częścią ASTROWORLD!</p>
+               <div class="controls">
+          <input type="text" id="searchInput" placeholder="Szukaj plików..." data-i18n="search.placeholder" data-i18n-placeholder>
+          <button id="randomGameBtn" title="Zagraj w coś losowego!" style="background:#222;color:#fff;border:1.5px solid #ff0000;border-radius:8px;padding:10px 20px;font-size:1.08em;font-weight:700;cursor:pointer;box-shadow:0 2px 8px #0003;transition:background 0.2s,box-shadow 0.2s;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-dice"></i> Losuj
+          </button>
+          <button id="refreshBtn" style="background:#222;color:#fff;border:1.5px solid #ff0000;border-radius:8px;padding:10px 28px;font-size:1.08em;font-weight:700;cursor:pointer;box-shadow:0 2px 8px #0003;transition:background 0.2s,box-shadow 0.2s;display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-sync-alt"></i> Odśwież
+          </button>
+                    <select id="categorySelect">
+                        <option value="all" data-i18n="categories.all">Wszystkie kategorie</option>
+                        <option value="documents">Dokumenty</option>
+                        <option value="images">Obrazy</option>
+                        <option value="audio">Audio</option>
+                        <option value="video">Wideo</option>
+                        <option value="archives">Archiwa</option>
+                        <option value="code">Kod / Tekst</option>
+                        <option value="executables">Wykonywalne</option>
+                        <option value="torrents">Torrenty</option>
+                        <option value="other">Inne</option>
+                    </select>
+                    <select id="sortSelect">
+                        <option value="name-asc">Nazwa (A-Z)</option>
+                        <option value="name-desc">Nazwa (Z-A)</option>
+                        <option value="date-desc">Data (najnowsze)</option>
+                        <option value="date-asc">Data (najstarsze)</option>
+                        <option value="size-desc">Rozmiar (największe)</option>
+                        <option value="size-asc">Rozmiar (najmniejsze)</option>
+                    </select>
+                </div>
+
+                <!-- Sekcja Polecanej Gry Tygodnia -->
+                <div id="featuredGameSection" class="featured-game-section hidden">
+                    <div class="featured-game-content">
+                        <h3 class="featured-game-title">Gra Tygodnia</h3>
+                        <div id="featuredGameCard" class="featured-game-card">
+                            <!-- Karta gry zostanie wstrzyknięta tutaj przez JavaScript -->
+                            <p>Ładowanie polecanej gry...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="loading-indicator" class="loading-indicator hidden">
+                    <i class="fas fa-spinner fa-spin"></i> Ładowanie plików...
+                </div>
+
+                <div id="no-files-message" class="info-message hidden">Brak plików do wyświetlenia.</div>
+                <div id="no-results-message" class="info-message hidden">Brak wyników dla Twojego zapytania.</div>
+
+                <div id="healthWarning" class="health-warning-card hidden">
+                    <h3><i class="fas fa-heartbeat"></i> Ostrzeżenie zdrowotne: Gry z gatunku Horror</h3>
+                    <p>Gry z gatunku horror mogą zawierać intensywne, przerażające sceny, które mogą wywoływać silne emocje, takie jak lęk, strach czy niepokój. Nie są zalecane dla osób wrażliwych, z problemami sercowymi, epilepsją lub zaburzeniami lękowymi.</p>
+                    <p><strong>Pamiętaj o regularnych przerwach i dbaj o swoje samopoczucie. Jeśli poczujesz się źle, natychmiast przerwij grę.</strong></p>
+                </div>
+
+                <div id="file-list" class="file-list">
+                </div>
+            </div>
+
+                <!-- Fullscreen Game Details View -->
+                <section id="gameDetailsView" class="game-details-view hidden">
+                  <div class="gd-header">
+                    <button id="gdBackButton" class="back-button"><i class="fas fa-arrow-left"></i> Wróć</button>
+                    <h2 id="gdTitle">MADiSON <span id="gdBadge" class="game-badge horror-badge hidden"><i class="fas fa-skull"></i> Najstraszniejsza gra 2022 roku</span></h2>
+                    <p id="gdDescription"></p>
+                    <div id="gdPreReleaseDisclaimer" class="gd-disclaimer-box hidden">
+                      <i class="fas fa-info-circle"></i>
+                      <span id="gdDisclaimerText"></span>
+                    </div>
+                    <div id="gdAstroDisclaimer" class="gd-disclaimer-box gd-disclaimer-info hidden">
+                      <i class="fas fa-exclamation-triangle"></i>
+                      <span id="gdAstroDisclaimerText"></span>
+                    </div>
+                    <div id="gdHorrorDisclaimer" class="gd-disclaimer-box gd-disclaimer-warning hidden">
+                        <i class="fas fa-heartbeat"></i>
+                        <span id="gdHorrorDisclaimerText"></span>
+                    </div>
+                  </div>
+                  <div class="gd-main">
+                    <div class="gd-media">
+                      <div class="video-container">
+                        <div id="gdTrailer"></div>
+                      </div>
+                      <div id="gdScreenshots" class="screenshots-container"></div>
+                    </div>
+                    <div class="gd-details">
+                      <div class="gd-section">
+                        <h3>Wymagania systemowe</h3>
+                        <div class="gd-info-grid">
+                          <div>
+                            <p class="gd-label">Minimalne:</p>
+                            <span id="gdMinRequirements"></span>
+                          </div>
+                          <div>
+                            <p class="gd-label">Zalecane:</p>
+                            <span id="gdRecRequirements"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="gd-info-grid gd-meta-grid">
+                        <div>
+                          <p class="gd-label">Deweloper:</p>
+                          <span id="gdDeveloper"></span>
+                        </div>
+                        <div>
+                          <p class="gd-label">Wydawca:</p>
+                          <span id="gdPublisher"></span>
+                        </div>
+                        <div>
+                          <p class="gd-label">Data wydania:</p>
+                          <span id="gdReleaseDate"></span>
+                        </div>
+                        <div>
+                          <p class="gd-label">Gatunki:</p>
+                          <span id="gdGenres"></span>
+                        </div>
+                        <div>
+                          <p class="gd-label">Platformy:</p>
+                          <span id="gdPlatforms"></span>
+                        </div>
+                        <div>
+                          <p class="gd-label">Wiek/PEGI:</p>
+                          <span id="gdAgeRating"></span>
+                        </div>
+                        <div>
+                          <p class="gd-label">DRM:</p>
+                          <span id="gdDRM"></span>
+                        </div>
+                        <div>
+                          <p class="gd-label">AntyCheat:</p>
+                          <span id="gdAnticheat"></span>
+                        </div>
+                        <div>
+                          <p class="gd-label">DLC:</p>
+                          <span id="gdDLC"></span>
+                        </div>
+                      </div>
+                      <div class="download-dropdown">
+                        <button id="gdDownloadButton" class="download-button">
+                          <i class="fas fa-download"></i> Pobierz <i class="fas fa-caret-down" style="margin-left: 8px; font-size: 0.9em;"></i>
+                        </button>
+                        <div id="gdDownloadMenu" class="dropdown-content hidden">
+                          <a href="#" id="gdWebTorrentDownloadBtn"><i class="fas fa-globe"></i> Pobierz w Astroworld</a>
+                          <a href="#" id="gdTorrentFileDownloadBtn"><i class="fas fa-file-download"></i> Pobierz plik .torrent</a>
+                        </div>
+                      </div>
+
+                      <div id="gdProgressContainer" class="progress-details-container hidden">
+                        <div class="progress-bar-label">Pobieranie...</div>
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill" id="gdProgressFill"></div>
+                        </div>
+                        <div class="progress-bar-percentage" id="gdProgressPercent">0%</div>
+                        <div class="progress-extra-info">
+                          <span id="gdDownloadSpeed"></span>
+                          <span id="gdPeers"></span>
+                          <span id="gdTimeRemaining"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+            </div>
+            <div id="settingsProgramPage" class="settings-program-page page-section hidden" style="max-width: 900px; margin: 0 auto;">
+                <h2 data-i18n="settings.title">Ustawienia</h2>
+
+                <!-- Karta: Wygląd -->
+                <div class="settings-card">
+                    <h3><i class="fas fa-paint-brush"></i> Wygląd</h3>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-moon"></i> Tryb Ciemny</strong>
+                            <span class="description">Przełącz między jasnym a ciemnym motywem aplikacji.</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="themeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-bolt"></i> Animacje Interfejsu</strong>
+                            <span class="description">Włącz lub wyłącz animacje dla płynniejszego działania na słabszych komputerach.</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="animationsToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Karta: Zachowanie aplikacji -->
+                <div class="settings-card">
+                    <h3><i class="fas fa-desktop"></i> Zachowanie aplikacji</h3>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-volume-up"></i> Dźwięki Interfejsu</strong>
+                            <span class="description">Włącz lub wyłącz efekty dźwiękowe przy interakcjach.</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="soundsToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-window-minimize"></i> Minimalizuj do Zasobnika Systemowego</strong>
+                            <span class="description">Po zamknięciu okna aplikacja pozostanie aktywna w tle.</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="trayToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Karta: Pobieranie -->
+                <div class="settings-card">
+                    <h3><i class="fas fa-download"></i> Pobieranie</h3>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-folder-open"></i> Folder Docelowy Pobrań</strong>
+                            <span class="description">Wybierz domyślny folder, do którego będą zapisywane pobrane pliki.</span>
+                        </div>
+                        <button id="selectDownloadFolderBtn" class="settings-btn small"><i class="fas fa-folder"></i> Wybierz folder</button>
+                        <span id="downloadFolderPath" class="settings-path-display">Nie wybrano</span>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-tachometer-alt"></i> Limit Prędkości Pobierania</strong>
+                            <span class="description">Ogranicz prędkość pobierania (w MB/s). Zostaw puste dla maksymalnej prędkości.</span>
+                        </div>
+                        <input type="number" id="downloadSpeedLimit" class="settings-input" placeholder="MB/s" min="0" step="0.1">
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-play-circle"></i> Automatycznie Uruchamiaj Po Pobraniu</strong>
+                            <span class="description">Automatycznie uruchamiaj pobrane pliki .exe po zakończeniu pobierania.</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="autoRunAfterDownload">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-pause"></i> Wstrzymuj Pobierania Przy Braku Aktywności</strong>
+                            <span class="description">Automatycznie wstrzymuj pobierania, gdy komputer jest w trybie uśpienia.</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="pauseOnSleep" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Karta: Powiadomienia -->
+                <div class="settings-card">
+                    <h3><i class="fas fa-bell"></i> Powiadomienia</h3>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-check-circle"></i> Powiadomienia O Zakończeniu Pobierania</strong>
+                            <span class="description">Wyświetlaj powiadomienia systemowe po zakończeniu pobierania plików.</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="downloadNotifications" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-exclamation-triangle"></i> Powiadomienia O Błędach</strong>
+                            <span class="description">Wyświetlaj powiadomienia o błędach podczas pobierania lub innych operacji.</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="errorNotifications" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-volume-up"></i> Dźwięk Powiadomień</strong>
+                            <span class="description">Odtwarzaj dźwięk przy powiadomieniach.</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="notificationSound" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Karta: Wyświetlanie -->
+                <div class="settings-card">
+                    <h3><i class="fas fa-eye"></i> Wyświetlanie</h3>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-th"></i> Rozmiar Kafelków Gier</strong>
+                            <span class="description">Wybierz rozmiar wyświetlanych kafelków gier na liście.</span>
+                        </div>
+                        <select id="tileSizeSelect" class="settings-select">
+                            <option value="small">Mały</option>
+                            <option value="medium" selected>Średni</option>
+                            <option value="large">Duży</option>
+                        </select>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-sort"></i> Domyślne Sortowanie</strong>
+                            <span class="description">Wybierz domyślny sposób sortowania listy plików.</span>
+                        </div>
+                        <select id="defaultSortSelect" class="settings-select">
+                            <option value="name-asc" selected>Nazwa (A-Z)</option>
+                            <option value="name-desc">Nazwa (Z-A)</option>
+                            <option value="date-desc">Data (najnowsze)</option>
+                            <option value="date-asc">Data (najstarsze)</option>
+                            <option value="size-desc">Rozmiar (największe)</option>
+                            <option value="size-asc">Rozmiar (najmniejsze)</option>
+                        </select>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-list"></i> Elementów Na Stronie</strong>
+                            <span class="description">Liczba elementów wyświetlanych na jednej stronie (paginacja).</span>
+                        </div>
+                        <input type="number" id="itemsPerPage" class="settings-input" value="20" min="10" max="100" step="10">
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-image"></i> Pokaż Miniaturki Gier</strong>
+                            <span class="description">Wyświetlaj miniatury okładek gier na liście (może spowolnić ładowanie).</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="showThumbnails" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Karta: Sieć i Bezpieczeństwo -->
+                <div class="settings-card">
+                    <h3><i class="fas fa-shield-alt"></i> Sieć i Bezpieczeństwo</h3>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-network-wired"></i> Użyj Proxy</strong>
+                            <span class="description">Włącz obsługę proxy dla połączeń sieciowych (zalecane dla bezpieczeństwa).</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="useProxy">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-option" id="proxySettings" style="display: none;">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-server"></i> Adres Proxy</strong>
+                            <span class="description">Adres serwera proxy (np. proxy.example.com:8080).</span>
+                        </div>
+                        <input type="text" id="proxyAddress" class="settings-input" placeholder="proxy.example.com:8080">
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-lock"></i> Weryfikuj Certyfikaty SSL</strong>
+                            <span class="description">Weryfikuj certyfikaty SSL przy połączeniach (zalecane dla bezpieczeństwa).</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="verifySSL" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-history"></i> Automatycznie Usuwaj Historię Pobrań</strong>
+                            <span class="description">Automatycznie usuwaj wpisy z historii pobrań starsze niż określona liczba dni.</span>
+                        </div>
+                        <input type="number" id="autoDeleteHistoryDays" class="settings-input" placeholder="Dni (0 = nigdy)" min="0" value="0">
+                    </div>
+                </div>
+
+                <!-- Karta: Dane i Pamięć podręczna -->
+                <div class="settings-card">
+                    <h3><i class="fas fa-database"></i> Dane i Pamięć podręczna</h3>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-broom"></i> Wyczyść Pamięć Podręczną</strong>
+                            <span class="description">Usuwa dane tymczasowe, takie jak zapisane filtry. Nie usuwa ustawień.</span>
+                        </div>
+                        <button id="clearCacheBtn" class="settings-btn small"><i class="fas fa-trash"></i> Wyczyść cache</button>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-file-export"></i> Eksportuj Ustawienia</strong>
+                            <span class="description">Zapisz wszystkie ustawienia do pliku, aby móc je później przywrócić.</span>
+                        </div>
+                        <button id="exportSettingsBtn" class="settings-btn small"><i class="fas fa-download"></i> Eksportuj</button>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-file-import"></i> Importuj Ustawienia</strong>
+                            <span class="description">Wczytaj ustawienia z wcześniej wyeksportowanego pliku.</span>
+                        </div>
+                        <button id="importSettingsBtn" class="settings-btn small"><i class="fas fa-upload"></i> Importuj</button>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-sync-alt"></i> Sprawdź Aktualizacje Aplikacji</strong>
+                            <span class="description">Sprawdź czy dostępna jest nowa wersja AstroWorld i pobierz ją automatycznie.</span>
+                        </div>
+                        <button id="checkAppUpdatesBtn" class="settings-btn small"><i class="fas fa-download"></i> Sprawdź aktualizacje</button>
+                    </div>
+                    <div class="settings-option">
+                        <div class="settings-option-label">
+                            <strong><i class="fas fa-undo"></i> Przywróć Ustawienia Domyślne</strong>
+                            <span class="description">Resetuje wszystkie opcje wyglądu i zachowania do wartości początkowych.</span>
+                        </div>
+                        <button id="resetSettingsBtn" class="settings-btn small"><i class="fas fa-redo"></i> Przywróć domyślne</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="aboutProgramPage" class="about-program-page page-section hidden">
+                <h2 data-i18n="about.title">O programie Astroworld</h2>
+                <div class="about-grid">
+                    <!-- Important Notes Card (Pinned to top) -->
+                    <div class="about-card about-warning-card">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Ważne informacje</h3>
+                        <div class="about-special-warning">
+                            <p class="warning-text">⚠️ Zalecamy korzystanie z VPN lub Proxy, aby chronić Twoją prywatność i zapewnić stabilne pobieranie. Uruchomienie aplikacji z uprawnieniami administratora jest kluczowe dla jej poprawnego działania, gwarantując uprawnienia do zapisu plików i zapobiegając błędom dostępu.</p>
+                            <p class="disclaimer-text">⚠️ Twórca nie ponosi odpowiedzialności za problemy przy korzystaniu bez VPN/Proxy.</p>
+                        </div>
+                        <p class="dev-status">🚀 Aplikacja jest w fazie beta. Dziękujemy za wsparcie w jej rozwoju!</p>
+                    </div>
+
+                    <!-- Main Info Card -->
+                    <div class="about-card about-main-card">
+                        <h3 id="aboutWelcomeHeader" data-i18n="about.welcome">Witaj w <strong>Astroworld 🌎</strong>!</h3>
+                        <p>Ta aplikacja desktopowa została stworzona, aby zapewnić Ci łatwy i bezpieczny dostęp do Twoich plików w wygodny sposób, bezpośrednio z Twojego komputera. Astroworld to coś więcej niż menedżer plików – to Twoje osobiste centrum rozrywki. Dzięki niej możesz przeglądać, sortować i filtrować pliki przechowywane na prywatnym serwerze, a także odkrywać nowe gry, przeglądać szczegółowe informacje ze zwiastunami i zrzutami ekranu, a wszystko to w nowoczesnym i personalizowanym interfejsie.</p>
+                        <div class="about-version-info">
+                            <p><strong>Wersja:</strong> <span id="appVersionDisplay">1.0.0</span></p>
+                            <p><strong>Autor:</strong> KMS (Kuvis Motion Studio)</p>
+                            <p><strong>Ostatnia Aktualizacja:</strong> 11.12.2025</p>
+                        </div>
+                    </div>
+
+                    <!-- Library Stats Card -->
+                    <div class="about-card about-stats-card">
+                        <h3><i class="fas fa-chart-bar"></i> Statystyki Biblioteki</h3>
+                        <div class="stats-content-wrapper">
+                            <ul id="libraryStatsList">
+                                <li><i class="fas fa-spinner fa-spin"></i> Ładowanie statystyk...</li>
+                            </ul>
+                            <div class="chart-container">
+                                <canvas id="genreChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Features Card -->
+                    <div class="about-card about-features-card">
+                        <h3>Główne cechy</h3>
+                        <ul>
+                            <li><i class="fas fa-search"></i> Intuicyjne wyszukiwanie i filtrowanie.</li>
+                            <li><i class="fas fa-sort-alpha-down"></i> Zaawansowane opcje sortowania.</li>
+                            <li><i class="fas fa-gamepad"></i> Dedykowane sekcje dla gier i aplikacji.</li>
+                            <li><i class="fas fa-info-circle"></i> Szczegółowe informacje o grach (zwiastuny, screeny).</li>
+                            <li><i class="fas fa-download"></i> Bezpośrednie pobieranie plików.</li>
+                            <li><i class="fas fa-star"></i> System oznaczania ulubionych.</li>
+                            <li><i class="fas fa-palette"></i> Wsparcie dla motywów (jasny/ciemny).</li>
+                            <li><i class="fas fa-language"></i> Interfejs w wielu językach.</li>
+                            <li><i class="fas fa-shield-alt"></i> Bezpieczne i prywatne środowisko.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Project Philosophy Card -->
+                    <div class="about-card about-philosophy-card">
+                        <h3>Filozofia Projektu</h3>
+                        <p>Astroworld powstał z pasji do tworzenia oprogramowania, które jest zarówno potężne, jak i przyjazne dla użytkownika. Nasze kluczowe wartości to:</p>
+                        <ul>
+                            <li><i class="fas fa-user-secret" style="color: #a259ff;"></i> <div><strong>Prywatność przede wszystkim:</strong> Twoje dane należą do Ciebie. Aplikacja działa lokalnie i nie śledzi Twojej aktywności.</div></li>
+                            <li><i class="fas fa-code-branch" style="color: #28a745;"></i> <div><strong>Otwartość i transparentność:</strong> Kod źródłowy jest publicznie dostępny. Wierzymy w siłę współpracy i otwartej dyskusji.</div></li>
+                            <li><i class="fas fa-users" style="color: #00cfff;"></i> <div><strong>Społeczność:</strong> Rozwijamy aplikację dla Was i z Wami. Wasze opinie i sugestie są dla nas bezcenne.</div></li>
+                        </ul>
+                    </div>
+
+                    <!-- Community & Social Media Card -->
+                    <div class="about-card about-community-card">
+                        <h3>Społeczność i Kontakt</h3>
+                        <p>Dołącz do naszej społeczności, aby być na bieżąco z rozwojem, zgłaszać pomysły lub po prostu porozmawiać. Jesteśmy otwarci na kontakt!</p>
+                        <ul>
+                            <li><i class="fab fa-github" style="color: #e0e6ed;"></i> <div><strong>GitHub:</strong> <a href="#" id="aboutLinkGitHub">Odwiedź repozytorium</a> - tutaj znajdziesz kod i możesz zgłaszać problemy.</div></li>
+                            <li><i class="fab fa-discord" style="color: #5865F2;"></i> <div><strong>Discord:</strong> <a href="#" id="aboutLinkDiscord">Dołącz do serwera</a> - miejsce do dyskusji i wsparcia.</div></li>
+                            <li><i class="fas fa-envelope" style="color: #ffc107;"></i> <div><strong>Email:</strong> <a href="#" id="aboutLinkEmail">kuvismotionstudio@gmail.com</a> - w sprawach biznesowych i współpracy.</div></li>
+                        </ul>
+                    </div>
+
+                    <!-- Technology Stack Card -->
+                    <div class="about-card about-tech-card">
+                        <h3>Technologie</h3>
+                        <ul>
+                            <li><i class="fab fa-electron"></i> Zbudowane na frameworku <strong>Electron</strong>.</li>
+                            <li><i class="fab fa-node-js"></i> Logika backendu oparta na <strong>Node.js</strong>.</li>
+                            <li><i class="fas fa-code"></i> Interfejs stworzony przy użyciu <strong>HTML, CSS i JavaScript</strong>.</li>
+                        </ul>
+                    </div>
+
+                    <!-- License Card -->
+                    <div class="about-card about-license-card">
+                        <h3>Licencja</h3>
+                        <p>
+                            Aplikacja jest udostępniana na <strong>licencji ISC</strong>.
+                            Jest to prosta, liberalna licencja open-source, która pozwala na swobodne użytkowanie i modyfikowanie kodu.
+                        </p>
+                    </div>
+
+                    <!-- Changelog Card -->
+                    <div class="about-card about-changelog-card">
+                        <h3>Historia Zmian (v1.0.0)</h3>
+                        <ul>
+                            <li><i class="fas fa-plus-circle" style="color: #28a745;"></i> <strong>Nowość:</strong> Zintegrowano klienta WebTorrent do pobierania plików.</li>
+                            <li><i class="fas fa-plus-circle" style="color: #28a745;"></i> <strong>Nowość:</strong> Wprowadzono nowy, profesjonalny ekran startowy.</li>
+                            <li><i class="fas fa-plus-circle" style="color: #28a745;"></i> <strong>Nowość:</strong> Dodano rozbudowaną sekcję "O programie".</li>
+                            <li><i class="fas fa-plus-circle" style="color: #28a745;"></i> <strong>Nowość:</strong> Dodano oznaczanie gier, które nie miały jeszcze premiery.</li>
+                            <li><i class="fas fa-wrench" style="color: #ffc107;"></i> <strong>Poprawka:</strong> Ulepszono wydajność renderowania listy plików.</li>
+                            <li><i class="fas fa-paint-brush" style="color: #17a2b8;"></i> <strong>Ulepszenie:</strong> Odświeżono wygląd paska bocznego i ikon.</li>
+                            <li><i class="fas fa-wrench" style="color: #ffc107;"></i> <strong>Poprawka:</strong> Naprawiono problem z brakującymi zrzutami ekranu.</li>
+                            <li><i class="fas fa-paint-brush" style="color: #17a2b8;"></i> <strong>Ulepszenie:</strong> Ulepszono wygląd i układ sekcji "O programie".</li>
+                        </ul>
+                    </div>
+
+                    <!-- Privacy Policy Card -->
+                    <div class="about-card about-privacy-card">
+                        <h3>Polityka Prywatności</h3>
+                        <p><i class="fas fa-user-secret" style="color: #a259ff;"></i> Twoja prywatność jest dla nas absolutnym priorytetem. Poniżej wyjaśniamy, jak aplikacja Astroworld podchodzi do kwestii Twoich danych.</p>
+                        <ul>
+                            <li>
+                                <i class="fas fa-server" style="color: #00cfff;"></i>
+                                <div>
+                                    <strong>Działanie w pełni lokalne:</strong> Aplikacja <strong>nie komunikuje się z żadnymi zewnętrznymi serwerami</strong> w celu przesyłania Twoich danych. Wszystkie operacje, takie jak zarządzanie plikami czy ustawieniami, odbywają się wyłącznie na Twoim komputerze.
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-user-slash" style="color: #ffc107;"></i>
+                                <div>
+                                    <strong>Brak zbierania danych:</strong> Nie zbieramy, nie przechowujemy, ani nie analizujemy żadnych Twoich danych osobowych, informacji o plikach, statystyk użytkowania ani danych telemetrycznych. Nie wymagamy tworzenia konta.
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-link" style="color: #17a2b8;"></i>
+                                <div>
+                                    <strong>Linki zewnętrzne:</strong> Aplikacja może zawierać linki do zewnętrznych stron (np. zwiastuny gier na YouTube). Po kliknięciu takiego linku opuszczasz naszą aplikację, a dalsze działania podlegają polityce prywatności danej strony.
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-code-branch" style="color: #28a745;"></i>
+                                <div>
+                                    <strong>Otwarty kod źródłowy:</strong> Kod aplikacji jest publicznie dostępny, co pozwala na niezależną weryfikację naszych zapewnień dotyczących prywatności.
+                                </div>
+                            </li>
+                        </ul>
+                        <p>W skrócie: Twoje dane i Twoja aktywność pozostają wyłącznie Twoje.</p>
+                    </div>
+
+                    <!-- FAQ Card -->
+                    <div class="about-card about-faq-card">
+                        <h3>Często Zadawane Pytania (FAQ)</h3>
+                        <ul>
+                            <li>
+                                <i class="fas fa-question-circle"></i>
+                                <div>
+                                    <strong>Dlaczego zalecane jest używanie VPN/Proxy?</strong>
+                                    <p>Zapewnia to anonimowość i bezpieczeństwo podczas pobierania plików, a także może pomóc w ominięciu potencjalnych blokad dostawców internetu.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-question-circle"></i>
+                                <div>
+                                    <strong>Jak mogę dodać własną aplikację?</strong>
+                                    <p>Użyj opcji "Upload Plików" w menu bocznym. Kreator poprowadzi Cię przez proces dodawania pliku .exe i wyboru dla niego ikony.</p>
+                                </div>
+                            </li>
+                             <li>
+                                <i class="fas fa-question-circle"></i>
+                                <div>
+                                    <strong>Gdzie zapisywane są moje ustawienia?</strong>
+                                    <p>Wszystkie ustawienia (takie jak motyw, język czy ulubione) są przechowywane lokalnie na Twoim komputerze w plikach konfiguracyjnych aplikacji.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Roadmap Card -->
+                    <div class="about-card about-roadmap-card">
+                        <h3>Plany Rozwoju (Roadmap)</h3>
+                        <ul>
+                            <li><i class="fas fa-rocket" style="color: #00cfff;"></i> <div><strong>Wersja 1.1:</strong> Integracja z zewnętrznymi bazami danych (np. IGDB) w celu automatycznego pobierania metadanych gier.</div></li>
+                            <li><i class="fas fa-palette" style="color: #a259ff;"></i> <div><strong>Wersja 1.2:</strong> Rozbudowany system personalizacji motywów i wyglądu interfejsu.</div></li>
+                            <li><i class="fas fa-download" style="color: #ffc107;"></i> <div><strong>Wersja 1.3:</strong> Ulepszony menedżer pobierania (kolejkowanie, ograniczanie prędkości).</div></li>
+                            <li><i class="fas fa-chart-line" style="color: #17a2b8;"></i> <div><strong>Wersja 1.4:</strong> Zaawansowane statystyki użytkowania i historia aktywności.</div></li>
+                            <li><i class="fas fa-users" style="color: #28a745;"></i> <div><strong>W przyszłości:</strong> System wtyczek i wsparcie dla dodatków tworzonych przez społeczność.</div></li>
+                            <li style="opacity: 0.6;">
+                                <i class="fab fa-apple" style="color: #dc3545; text-decoration: line-through;"></i>
+                                <div>
+                                    <strong>Anulowane:</strong> Przygotowanie wersji na system macOS zostało anulowane, ponieważ większość gier i tak nie byłaby kompatybilna z tym systemem.
+                                </div>
+                            </li>
+                            <li style="opacity: 0.6;">
+                                <i class="fab fa-linux" style="color: #dc3545; text-decoration: line-through;"></i>
+                                <div>
+                                    <strong>Anulowane:</strong> Przygotowanie wersji na system Linux zostało anulowane z podobnych powodów co wersja na macOS - większość gier nie byłaby kompatybilna.
+                                </div>
+                            </li>
+                            <li><i class="fas fa-sync-alt" style="color: #6c757d;"></i> <div><strong>W przyszłości:</strong> Wbudowany mechanizm automatycznych aktualizacji aplikacji.</div></li>
+                            <li><i class="fas fa-cloud-upload-alt" style="color: #4682B4;"></i> <div><strong>W przyszłości:</strong> Synchronizacja ustawień i ulubionych w chmurze.</div></li>
+                            <li><i class="fas fa-comments" style="color: #32CD32;"></i> <div><strong>W przyszłości:</strong> System ocen i komentarzy od społeczności.</div></li>
+                            <li><i class="fas fa-terminal" style="color: #DAA520;"></i> <div><strong>W przyszłości:</strong> Paleta komend dla zaawansowanych użytkowników (szybki dostęp do funkcji).</div></li>
+                        </ul>
+                    </div>
+
+                    <!-- Known Issues Card -->
+                    <div class="about-card about-known-issues-card">
+                        <h3>Znane Problemy</h3>
+                        <ul>
+                            <li>
+                                <i class="fas fa-gamepad" style="color: #ffc107;"></i>
+                                <div>
+                                    <strong>Sekcja "Free to Play" jest tymczasowo niedostępna:</strong>
+                                    <p>Jesteśmy świadomi problemu i pracujemy nad jego jak najszybszym rozwiązaniem. Dziękujemy za cierpliwość.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-question-circle" style="color: #ffc107;"></i>
+                                <div>
+                                    <strong>Sekcja "Pomoc/FAQ" jest tymczasowo niedostępna:</strong>
+                                    <p>Jesteśmy świadomi problemu i pracujemy nad jego jak najszybszym rozwiązaniem. Dziękujemy za cierpliwość.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Contributing Card -->
+                    <div class="about-card about-contributing-card">
+                        <h3>Współtworzenie</h3>
+                        <p>Astroworld to projekt tworzony z pasją, który rozwija się dzięki zaangażowaniu społeczności. Każda forma pomocy, od zgłoszenia błędu po sugestię nowej funkcji, jest dla nas niezwykle cenna i pomaga uczynić aplikację jeszcze lepszą. Jeśli chcesz dołożyć swoją cegiełkę, oto jak możesz to zrobić:</p>
+                        <ul>
+                            <li><i class="fas fa-bug" style="color: #dc3545;"></i> <div><strong>Zgłaszanie błędów:</strong> Znalazłeś błąd lub coś nie działa tak, jak powinno? Będziemy wdzięczni za szczegółowe zgłoszenie na naszym <a href="#" onclick="event.preventDefault(); window.api.openLink('https://discord.gg/UBhtYzNu');">Discordzie</a>. Im więcej informacji podasz (np. kroki do odtworzenia błędu, zrzuty ekranu), tym łatwiej będzie nam go naprawić.</div></li>
+                            <li><i class="fas fa-lightbulb" style="color: #17a2b8;"></i> <div><strong>Sugerowanie funkcji:</strong> Masz pomysł na nową, ekscytującą funkcję? Otwórz nową dyskusję lub zgłoszenie na naszym <a href="#" onclick="event.preventDefault(); window.api.openLink('https://discord.gg/UBhtYzNu');">Discordzie</a> i opisz swoją wizję. Chętnie wysłuchamy Twoich propozycji!</div></li>
+                            <li><i class="fas fa-language" style="color: #28a745;"></i> <div><strong>Pomoc w tłumaczeniach:</strong> Znasz inny język i chcesz pomóc w tłumaczeniu interfejsu? Skontaktuj się z nami poprzez GitHub lub Discord. Twoja pomoc pozwoli dotrzeć do użytkowników na całym świecie.</div></li>
+                            <li><i class="fas fa-book" style="color: #ffc107;"></i> <div><strong>Ulepszanie dokumentacji:</strong> Zauważyłeś, że coś w opisach lub sekcji pomocy jest niejasne? Twoje sugestie dotyczące poprawy tekstów są na wagę złota.</div></li>
+                        </ul>
+                    </div>
+
+                    <!-- Support Project Card -->
+                    <div class="about-card about-support-project-card">
+                        <h3>Wesprzyj Rozwój Astroworld</h3>
+                        <p>Astroworld to projekt tworzony z pasji, który jest i zawsze będzie darmowy. Jeśli doceniasz czas i wysiłek włożony w jego rozwój i chcesz pomóc w pokryciu kosztów (np. utrzymania serwerów, zakupu narzędzi) oraz umożliwić dalsze tworzenie nowych funkcji, możesz wesprzeć mnie w jeden z poniższych sposobów. Każda pomoc, nawet najmniejsza, jest dla mnie ogromną motywacją!</p>
+                        <ul>
+                            <li><i class="fab fa-patreon" style="color: #f96854;"></i> <div><a href="#" onclick="event.preventDefault(); window.api.openLink('https://www.patreon.com/twoj-autor');">Zostań Patronem na Patreonie</a></div></li>
+                            <li><i class="fas fa-coffee" style="color: #29abe0;"></i> <div><a href="#" onclick="event.preventDefault(); window.api.openLink('https://ko-fi.com/twoj-autor');">Postaw mi kawę na Ko-fi</a></div></li>
+                            <li><i class="fab fa-paypal" style="color: #00457C;"></i> <div><a href="#" onclick="event.preventDefault(); window.api.openLink('https://www.paypal.com/paypalme/twoj-autor');">Wesprzyj przez PayPal</a></div></li>
+                            <li><i class="fab fa-bitcoin" style="color: #F7931A;"></i> <div><a href="#" onclick="event.preventDefault(); window.api.openLink('https://example.com/crypto-donations');">Przekaż kryptowaluty</a></div></li>
+                        </ul>
+                        <p>Pamiętaj, że wsparcie jest całkowicie dobrowolne. Najważniejsze jest to, że korzystasz z aplikacji i czerpiesz z niej przyjemność. Dziękuję, że jesteś częścią tej społeczności!</p>
+                    </div>
+
+                    <!-- Libraries Card -->
+                    <div class="about-card about-libraries-card">
+                        <h3>Użyte Biblioteki i Zasoby</h3>
+                        <p>Ten projekt nie byłby możliwy bez fantastycznych narzędzi i bibliotek open-source. Główne z nich to:</p>
+                        <ul>
+                            <li><i class="fab fa-js-square" style="color: #f7df1e;"></i> <div><strong>Electron & Node.js</strong> - Rdzeń aplikacji desktopowej.</div></li>
+                            <li><i class="fas fa-icons" style="color: #528dd7;"></i> <div><strong>Font Awesome</strong> - Za wspaniały zestaw ikon.</div></li>
+                            <li><i class="fas fa-brain" style="color: #74aa9c;"></i> <div><strong>OpenAI API</strong> - Za wsparcie w rozwoju i generowaniu treści.</div></li>
+                        </ul>
+                        <p>Pełna lista zależności technicznych znajduje się w pliku <code>package.json</code> w katalogu aplikacji.</p>
+                    </div>
+
+                    <!-- System Info Card -->
+                    <div class="about-card about-system-info-card">
+                        <h3>Informacje o Systemie</h3>
+                        <p>Te informacje mogą być przydatne podczas zgłaszania błędów.</p>
+                        <ul id="systemInfoList">
+                            <li><i class="fas fa-spinner fa-spin"></i> Ładowanie...</li>
+                        </ul>
+                        <button id="copySystemInfoBtn" class="settings-btn small"><i class="fas fa-copy"></i> Kopiuj do schowka</button>
+                    </div>
+
+                    <!-- Credits Card -->
+                    <div class="about-card about-credits-card">
+                        <h3>Podziękowania</h3>
+                        <p>Dziękujemy za korzystanie z naszej aplikacji! Szczególne podziękowania za wsparcie AI od OpenAI przy rozwoju projektu.</p>
+                        <p>Serdeczne podziękowania dla <span class="fitgirl-credit">FitGirl</span>, <span class="dodi-credit">Dodi</span>, <span class="steamunlocked-credit">steamunlocked</span>, <span class="crotorrents-credit">crotorrents</span>, <span class="online-fix-credit">online-fix</span> za wkład i pasję w tworzeniu repacków.</p>
+                        <p>A przede wszystkim, dziękujemy Wam, użytkownikom <strong class="astroworld-thank-you">Astroworld</strong>, za bycie częścią naszej społeczności!</p>
+                    </div>
+
+                    <!-- Support Card -->
+                    <div class="about-card about-support-card">
+                        <h3>Wsparcie i pomoc</h3>
+                        <p>Jeśli napotkałeś problem lub masz pytanie, jesteśmy tutaj, aby Ci pomóc. Wybierz najwygodniejszą dla siebie formę kontaktu:</p>
+                        <ul>
+                            <li><i class="fas fa-life-ring" style="color: #17a2b8;"></i> <div><strong>Sekcja Pomoc / FAQ:</strong> Zanim zadasz pytanie, sprawdź naszą <a href="#" id="helpLinkRedirect">sekcję Pomocy</a>. Znajdziesz tam odpowiedzi na najczęściej zadawane pytania.</div></li>
+                            <li><i class="fab fa-discord" style="color: #5865F2;"></i> <div><strong>Serwer Discord:</strong> Najszybszy sposób na uzyskanie pomocy od społeczności i deweloperów. Dołącz do naszego <a href="#" id="supportLinkDiscord">serwera Discord</a>.</div></li>
+                            <li><i class="fas fa-envelope" style="color: #ffc107;"></i> <div><strong>Kontakt e-mail:</strong> W sprawach, które wymagają indywidualnego podejścia, napisz na adres <a href="#" id="supportLinkEmail">kuvismotionstudio@gmail.com</a>.</div></li>
+                            <li><i class="fas fa-globe" style="color: #28a745;"></i> <div><strong>Oficjalna strona:</strong> Odwiedź naszą stronę <a href="#" id="supportLinkWebsite">astroworld.com</a>, aby znaleźć więcej informacji i aktualności.</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="logoutMessage" class="logout-message page-section hidden">
+                <h2>Wylogowano</h2>
+                <p>Zostałeś wylogowany z aplikacji Astroworld.</p>
+            </div>
+            <footer class="footer">
+                <p>&copy; 2025 Astroworld Wszystkie prawa zastrzeżone.</p>
+            </footer> </div>
+        </div>
+    </div>
+<!-- Sekcja: Historia i statystyki pobrań (domyślnie ukryta, pokazywana przez JS) -->
+<div id="downloadsStatsSection" class="page-section hidden">
+  <section id="downloads-stats-history" class="container" style="margin-top:2em;">
+    <h2>Historia pobrań</h2>
+    <div id="downloadHistorySection"></div>
+    <button id="clearDownloadHistoryBtn" class="btn danger" style="margin-bottom:1em;">Wyczyść historię</button>
+
+    <h2>Statystyki pobrań</h2>
+    <div id="downloadStatsSection"></div>
+    <button id="clearDownloadStatsBtn" class="btn danger">Wyczyść statystyki</button>
+  </section>
+</div>
+<!-- MODAL: Upload aplikacji -->
+<div id="uploadAppOverlay" class="modal-overlay hidden"></div>
+<div id="uploadAppModal" class="modal upload-app-modal hidden">
+  <div class="modal-header">
+    <h2>Dodaj aplikację</h2>
+    <button id="uploadAppCloseBtn" class="close-button" title="Zamknij">&times;</button>
+  </div>
+  <div class="modal-body">
+    <div class="upload-steps-container">
+      <!-- Krok 1: Wybór .exe -->
+      <div id="uploadAppStep1" class="upload-step active-step">
+        <h3>Krok 1: Wybierz plik .exe</h3>
+        <div id="uploadAppExeDrop" class="upload-dropzone">
+          <i class="fas fa-file-upload"></i>
+          Przeciągnij plik .exe tutaj lub kliknij przycisk
+          <input type="file" id="uploadAppExeInput" accept=".exe" style="display:none">
+          <button id="uploadAppSelectExeBtn" type="button" onclick="document.getElementById('uploadAppExeInput').click()">Wybierz plik</button>
+        </div>
+        <div id="uploadAppExeInfo" class="upload-info"></div>
+        <div id="uploadAppExeError" class="upload-error"></div>
+        <button id="uploadAppNextBtn" type="button" class="modal-btn">Dalej</button>
+      </div>
+      <!-- Krok 2: Ikona -->
+      <div id="uploadAppStep2" class="upload-step hidden-step">
+        <h3>Krok 2: Wybierz ikonę</h3>
+        <div class="upload-icon-options">
+          <button id="uploadAppExtractIconsBtn" type="button" class="modal-btn">Użyj ikony z .exe</button>
+          <input type="file" id="uploadAppCustomIconInput" accept=".ico,.png" style="display:none">
+          <button type="button" class="modal-btn" onclick="document.getElementById('uploadAppCustomIconInput').click()">Wgraj własną</button>
+          <button id="uploadAppNoIconBtn" type="button" class="modal-btn">Brak ikony</button>
+        </div>
+        <div id="uploadAppIconOptions" class="icon-options-grid"></div>
+        <div id="uploadAppIconPreview" class="icon-preview"></div>
+        <div id="uploadAppIconError" class="upload-error"></div>
+        <button id="uploadAppBackBtn" type="button" class="modal-btn">Wstecz</button>
+        <button id="uploadAppSaveBtn" type="button" class="modal-btn">Zapisz</button>
+        <progress id="uploadAppProgress" value="0" max="100" style="width:100%;margin-top:10px"></progress>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS - Przeniesione na koniec dla pewności, że cały DOM jest załadowany -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+
+<!-- Toast / Snackbar Notification -->
+<div id="toast" class="toast-message hidden"></div>
+
+<!-- Lightbox for screenshots -->
+<div id="screenshotLightbox" class="lightbox hidden">
+  <span class="lightbox-close">&times;</span>
+  <div class="lightbox-content">
+    <img id="lightboxImage" src="" alt="Screenshot">
+    <div class="lightbox-caption"></div>
+  </div>
+</div>
+
+<!-- Przycisk "Wróć na górę" -->
+<button id="backToTopBtn" class="back-to-top-btn hidden" title="Wróć na górę">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- Modal ostrzegawczy o premierze -->
+<div id="preReleaseModalOverlay" class="modal-overlay hidden"></div>
+<div id="preReleaseModal" class="pre-release-modal hidden">
+    <div class="pre-release-modal-content">
+        <div class="pre-release-icon"><i class="fas fa-hourglass-half"></i></div>
+        <h3 id="preReleaseModalTitle">Premiera wkrótce!</h3>
+        <p id="preReleaseModalText">Gra jeszcze nie miała premiery. Pobranie jej jest niedostępne do czasu premiery.</p>
+        <div id="preReleaseCountdown" class="pre-release-countdown-display">
+            <span id="preReleaseCountdownText"></span>
+        </div>
+        <div class="pre-release-modal-actions">
+            <button id="preReleaseBackBtn" class="btn-secondary">Wróć</button>
+            <button id="preReleaseProceedBtn" class="btn-primary">Zobacz szczegóły</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Skrypt do obsługi skrótu klawiszowego do debugowania -->
+<script>
+  document.addEventListener('keydown', (e) => {
+    // Otwórz/zamknij narzędzia deweloperskie za pomocą Ctrl+Shift+I
+    if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+      if (window.api && window.api.toggleDevTools) {
+        window.api.toggleDevTools();
+      }
+    }
+  });
+</script>
+</body>
+</html>

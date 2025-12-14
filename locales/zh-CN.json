@@ -1,0 +1,96 @@
+{
+  "common": {
+    "home": "首页",
+    "about": "关于",
+    "settings": "设置",
+    "search": "搜索...",
+    "download": "下载",
+    "details": "详情",
+    "close": "关闭",
+    "cancel": "取消",
+    "save": "保存",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "warning": "警告",
+    "appTitle": "私人文件服务器",
+    "appSubtitle": "您的私人文件服务器",
+    "language": "zh-CN"
+  },
+  "sidebar": {
+    "home": "首页",
+    "calendar": "发布日历",
+    "upload": "上传文件",
+    "settings": "设置",
+    "about": "关于",
+    "freeToPlay": "免费游戏",
+    "dashboard": "仪表盘",
+    "games": "游戏",
+    "library": "库",
+    "downloads": "下载",
+    "favorites": "收藏",
+    "help": "帮助"
+  },
+  "updateModal": {
+    "title": "Astroworld 新版本！",
+    "available": "有新版本的应用可用。",
+    "download": "下载并安装"
+  },
+  "freeToPlay": {
+    "title": "免费游戏",
+    "searchPlaceholder": "搜索游戏..."
+  },
+  "categories": {
+    "all": "所有分类"
+  },
+  "about": {
+    "title": "关于 Astroworld",
+    "welcome": "欢迎来到 <strong>Astroworld 🌎</strong>，您的私人文件管理中心！",
+    "disclaimer": "注意：应用程序仍在开发中！"
+  },
+  "settings": {
+    "appearance": "外观",
+    "theme": "主题",
+    "darkMode": "深色模式",
+    "lightMode": "浅色模式",
+    "language": "语言",
+    "interfaceAnimations": "界面动画",
+    "enableAnimations": "启用动画",
+    "notifications": "通知",
+    "enableNotifications": "启用通知",
+    "advanced": "高级",
+    "clearCache": "清除缓存",
+    "resetSettings": "重置设置"
+  },
+  "game": {
+    "play": "播放",
+    "install": "安装",
+    "uninstall": "卸载",
+    "launching": "启动中...",
+    "installing": "安装中...",
+    "uninstalling": "卸载中...",
+    "updateAvailable": "有可用更新",
+    "updating": "更新中...",
+    "version": "版本",
+    "size": "大小",
+    "lastPlayed": "最后播放",
+    "playtime": "播放时间"
+  },
+  "downloads": {
+    "active": "活动下载",
+    "completed": "已完成",
+    "paused": "已暂停",
+    "speed": "速度",
+    "status": "状态",
+    "progress": "进度",
+    "timeRemaining": "剩余时间",
+    "downloads": "下载"
+  },
+  "notifications": {
+    "gameInstalled": "{game} 已成功安装",
+    "gameUninstalled": "{game} 已卸载",
+    "updateAvailable": "{game} 有可用更新",
+    "downloadComplete": "下载完成: {file}",
+    "downloadFailed": "下载失败: {file}"
+  }
+}

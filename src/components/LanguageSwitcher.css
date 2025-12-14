@@ -1,0 +1,61 @@
+/* Language Switcher Styles */
+.language-switcher {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85em;
+  transition: all 0.2s ease;
+  opacity: 0.6;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0.9;
+}
+
+.lang-btn.active {
+  background: #ff0000;
+  opacity: 1;
+}
+
+.lang-separator {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.9em;
+  user-select: none;
+  line-height: 1;
+  margin: 0 2px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .language-switcher {
+    top: 10px;
+    right: 10px;
+    padding: 3px;
+  }
+  
+  .lang-btn {
+    padding: 4px 8px;
+    font-size: 0.8em;
+  }
+}

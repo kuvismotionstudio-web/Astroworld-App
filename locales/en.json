@@ -1,0 +1,98 @@
+{
+  "common": {
+    "home": "Home",
+    "about": "About",
+    "settings": "Settings",
+    "search": "Search...",
+    "download": "Download",
+    "details": "Details",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "appTitle": "Private File Server",
+    "appSubtitle": "Your private file server",
+    "language": "en",
+    "language_en": "English",
+    "language_pl": "Polish"
+  },
+  "sidebar": {
+    "home": "Home",
+    "calendar": "Release Calendar",
+    "upload": "Upload Files",
+    "settings": "Settings",
+    "about": "About",
+    "freeToPlay": "Free to Play",
+    "dashboard": "Dashboard",
+    "games": "Games",
+    "library": "Library",
+    "downloads": "Downloads",
+    "favorites": "Favorites",
+    "help": "Help"
+  },
+  "updateModal": {
+    "title": "New Version of Astroworld!",
+    "available": "A new version of the application is available.",
+    "download": "Download and Install"
+  },
+  "freeToPlay": {
+    "title": "Free to Play",
+    "searchPlaceholder": "Search games..."
+  },
+  "categories": {
+    "all": "All Categories"
+  },
+  "about": {
+    "title": "About Astroworld",
+    "welcome": "Welcome to <strong>Astroworld 🌎</strong>, your private file management center!",
+    "disclaimer": "Note: application is still in development!"
+  },
+  "settings": {
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "language": "Language",
+    "interfaceAnimations": "Interface Animations",
+    "enableAnimations": "Enable Animations",
+    "notifications": "Notifications",
+    "enableNotifications": "Enable Notifications",
+    "advanced": "Advanced",
+    "clearCache": "Clear Cache",
+    "resetSettings": "Reset to Defaults"
+  },
+  "game": {
+    "play": "Play",
+    "install": "Install",
+    "uninstall": "Uninstall",
+    "launching": "Launching...",
+    "installing": "Installing...",
+    "uninstalling": "Uninstalling...",
+    "updateAvailable": "Update Available",
+    "updating": "Updating...",
+    "version": "Version",
+    "size": "Size",
+    "lastPlayed": "Last Played",
+    "playtime": "Playtime"
+  },
+  "downloads": {
+    "active": "Active Downloads",
+    "completed": "Completed",
+    "paused": "Paused",
+    "speed": "Speed",
+    "status": "Status",
+    "progress": "Progress",
+    "timeRemaining": "Time Remaining",
+    "downloads": "Downloads"
+  },
+  "notifications": {
+    "gameInstalled": "{game} has been installed successfully",
+    "gameUninstalled": "{game} has been uninstalled",
+    "updateAvailable": "Update available for {game}",
+    "downloadComplete": "Download complete: {file}",
+    "downloadFailed": "Download failed: {file}"
+  }
+}

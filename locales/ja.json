@@ -1,0 +1,96 @@
+{
+  "common": {
+    "home": "ホーム",
+    "about": "情報",
+    "settings": "設定",
+    "search": "検索...",
+    "download": "ダウンロード",
+    "details": "詳細",
+    "close": "閉じる",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功",
+    "warning": "警告",
+    "appTitle": "プライベートファイルサーバー",
+    "appSubtitle": "あなたのプライベートファイルサーバー",
+    "language": "ja"
+  },
+  "sidebar": {
+    "home": "ホーム",
+    "calendar": "リリースカレンダー",
+    "upload": "ファイルをアップロード",
+    "settings": "設定",
+    "about": "情報",
+    "freeToPlay": "無料ゲーム",
+    "dashboard": "ダッシュボード",
+    "games": "ゲーム",
+    "library": "ライブラリ",
+    "downloads": "ダウンロード",
+    "favorites": "お気に入り",
+    "help": "ヘルプ"
+  },
+  "updateModal": {
+    "title": "Astroworldの新しいバージョン！",
+    "available": "アプリケーションの新しいバージョンが利用可能です。",
+    "download": "ダウンロードしてインストール"
+  },
+  "freeToPlay": {
+    "title": "無料ゲーム",
+    "searchPlaceholder": "ゲームを検索..."
+  },
+  "categories": {
+    "all": "すべてのカテゴリ"
+  },
+  "about": {
+    "title": "Astroworldについて",
+    "welcome": "<strong>Astroworld 🌎</strong>へようこそ、あなたのプライベートファイル管理センターへ！",
+    "disclaimer": "注：アプリケーションはまだ開発中です！"
+  },
+  "settings": {
+    "appearance": "外観",
+    "theme": "テーマ",
+    "darkMode": "ダークモード",
+    "lightMode": "ライトモード",
+    "language": "言語",
+    "interfaceAnimations": "インターフェースアニメーション",
+    "enableAnimations": "アニメーションを有効にする",
+    "notifications": "通知",
+    "enableNotifications": "通知を有効にする",
+    "advanced": "詳細設定",
+    "clearCache": "キャッシュをクリア",
+    "resetSettings": "設定をリセット"
+  },
+  "game": {
+    "play": "プレイ",
+    "install": "インストール",
+    "uninstall": "アンインストール",
+    "launching": "起動中...",
+    "installing": "インストール中...",
+    "uninstalling": "アンインストール中...",
+    "updateAvailable": "アップデートあり",
+    "updating": "アップデート中...",
+    "version": "バージョン",
+    "size": "サイズ",
+    "lastPlayed": "最終プレイ",
+    "playtime": "プレイ時間"
+  },
+  "downloads": {
+    "active": "ダウンロード中",
+    "completed": "完了",
+    "paused": "一時停止中",
+    "speed": "速度",
+    "status": "ステータス",
+    "progress": "進捗",
+    "timeRemaining": "残り時間",
+    "downloads": "ダウンロード"
+  },
+  "notifications": {
+    "gameInstalled": "{game}のインストールが完了しました",
+    "gameUninstalled": "{game}がアンインストールされました",
+    "updateAvailable": "{game}のアップデートが利用可能です",
+    "downloadComplete": "ダウンロード完了: {file}",
+    "downloadFailed": "ダウンロードに失敗しました: {file}"
+  }
+}

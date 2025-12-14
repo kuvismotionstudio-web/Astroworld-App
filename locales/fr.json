@@ -1,0 +1,96 @@
+{
+  "common": {
+    "home": "Accueil",
+    "about": "À propos",
+    "settings": "Paramètres",
+    "search": "Rechercher...",
+    "download": "Télécharger",
+    "details": "Détails",
+    "close": "Fermer",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "warning": "Avertissement",
+    "appTitle": "Serveur de Fichiers Privé",
+    "appSubtitle": "Votre serveur de fichiers privé",
+    "language": "fr"
+  },
+  "sidebar": {
+    "home": "Accueil",
+    "calendar": "Calendrier des Sorties",
+    "upload": "Téléverser des Fichiers",
+    "settings": "Paramètres",
+    "about": "À propos",
+    "freeToPlay": "Gratuit",
+    "dashboard": "Tableau de Bord",
+    "games": "Jeux",
+    "library": "Bibliothèque",
+    "downloads": "Téléchargements",
+    "favorites": "Favoris",
+    "help": "Aide"
+  },
+  "updateModal": {
+    "title": "Nouvelle version d'Astroworld !",
+    "available": "Une nouvelle version de l'application est disponible.",
+    "download": "Télécharger et Installer"
+  },
+  "freeToPlay": {
+    "title": "Gratuit",
+    "searchPlaceholder": "Rechercher des jeux..."
+  },
+  "categories": {
+    "all": "Toutes les Catégories"
+  },
+  "about": {
+    "title": "À propos d'Astroworld",
+    "welcome": "Bienvenue sur <strong>Astroworld 🌎</strong>, votre centre de gestion de fichiers privé !",
+    "disclaimer": "Remarque : l'application est encore en développement !"
+  },
+  "settings": {
+    "appearance": "Apparence",
+    "theme": "Thème",
+    "darkMode": "Mode Sombre",
+    "lightMode": "Mode Clair",
+    "language": "Langue",
+    "interfaceAnimations": "Animations de l'Interface",
+    "enableAnimations": "Activer les Animations",
+    "notifications": "Notifications",
+    "enableNotifications": "Activer les Notifications",
+    "advanced": "Avancé",
+    "clearCache": "Vider le Cache",
+    "resetSettings": "Réinitialiser les Paramètres"
+  },
+  "game": {
+    "play": "Jouer",
+    "install": "Installer",
+    "uninstall": "Désinstaller",
+    "launching": "Lancement...",
+    "installing": "Installation...",
+    "uninstalling": "Désinstallation...",
+    "updateAvailable": "Mise à jour disponible",
+    "updating": "Mise à jour...",
+    "version": "Version",
+    "size": "Taille",
+    "lastPlayed": "Dernière Partie",
+    "playtime": "Temps de Jeu"
+  },
+  "downloads": {
+    "active": "Téléchargements Actifs",
+    "completed": "Terminés",
+    "paused": "En Pause",
+    "speed": "Vitesse",
+    "status": "Statut",
+    "progress": "Progression",
+    "timeRemaining": "Temps Restant",
+    "downloads": "Téléchargements"
+  },
+  "notifications": {
+    "gameInstalled": "{game} a été installé avec succès",
+    "gameUninstalled": "{game} a été désinstallé",
+    "updateAvailable": "Mise à jour disponible pour {game}",
+    "downloadComplete": "Téléchargement terminé : {file}",
+    "downloadFailed": "Échec du téléchargement : {file}"
+  }
+}
