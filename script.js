@@ -2798,6 +2798,18 @@ Wersja aplikacji: 1.0.0
         });
     }
 
+    // Dodaj obsługę kliknięcia linku "Kalendarz Premier"
+    const calendarLink = document.getElementById('calendarLink');
+    const calendarPage = document.getElementById('calendarPage');
+    if (calendarLink && calendarPage) {
+        calendarLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            showSection(calendarPage);
+            loadCalendarData();
+            updateDiscordPresence('Przegląda kalendarz premier', 'Sprawdza nadchodzące gry');
+        });
+    }
+
     // Dodaj obsługę kliknięcia linku "Pomoc" jako osobne okno (jak O Programie)
     const helpPageLink = document.getElementById('helpPageLink');
     const helpPage = document.getElementById('helpPage');
@@ -3654,3 +3666,604 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', handleSidebarState);
     }
 });
+
+// === KALENDARZ PREMIER FUNCTIONALITY ===
+let calendarData = [];
+let currentCalendarView = 'list'; // 'list' lub 'grid'
+let currentCalendarDate = new Date();
+
+// Ładowanie danych kalendarza
+async function loadCalendarData() {
+    console.log('🗓️ Ładowanie danych kalendarza...');
+    try {
+        // Spróbuj załadować przez API
+        if (window.api && window.api.readCalendarData) {
+            calendarData = await window.api.readCalendarData();
+        } else {
+            // Fallback - załaduj bezpośrednio z pliku
+            const response = await fetch('./calendar_data.json');
+            calendarData = await response.json();
+        }
+        console.log('📅 Załadowano dane kalendarza:', calendarData.length, 'gier');
+        
+        // Sortuj według daty premiery
+        calendarData.sort((a, b) => new Date(a.releaseDate) - new Date(b.releaseDate));
+        
+        // Aktualizuj status gier
+        updateGameStatuses();
+        
+        // Wyświetl dane
+        if (currentCalendarView === 'list') {
+            displayCalendarList();
+        } else {
+            displayCalendarGrid();
+        }
+        
+        // Inicjalizuj filtry
+        initializeCalendarFilters();
+        
+        // Sprawdź nadchodzące premiery
+        setTimeout(checkUpcomingReleases, 2000);
+        
+    } catch (error) {
+        console.error('❌ Błąd ładowania danych kalendarza:', error);
+        
+        // Pokaż komunikat o błędzie
+        const calendarList = document.getElementById('calendarList');
+        if (calendarList) {
+            calendarList.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #ff4444;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 3em; margin-bottom: 20px;"></i>
+                    <h3>Błąd ładowania kalendarza</h3>
+                    <p>Nie udało się załadować danych premier gier.</p>
+                    <button onclick="loadCalendarData()" style="background: #ff0000; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-top: 15px;">
+                        <i class="fas fa-redo"></i> Spróbuj ponownie
+                    </button>
+                </div>
+            `;
+        }
+        
+        showToast('Błąd ładowania kalendarza premier', 3000, 'error');
+    }
+}
+
+// Aktualizacja statusów gier
+function updateGameStatuses() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    calendarData.forEach(game => {
+        const releaseDate = new Date(game.releaseDate);
+        releaseDate.setHours(0, 0, 0, 0);
+        
+        if (releaseDate.getTime() === today.getTime()) {
+            game.status = 'today';
+        } else if (releaseDate > today) {
+            game.status = 'upcoming';
+        } else {
+            game.status = 'past';
+        }
+    });
+}
+
+// Wyświetlanie listy premier
+function displayCalendarList() {
+    console.log('📋 Wyświetlanie listy kalendarza...');
+    const calendarList = document.getElementById('calendarList');
+    const calendarGrid = document.getElementById('calendarGrid');
+    const noCalendarMessage = document.getElementById('noCalendarMessage');
+    
+    if (!calendarList) {
+        console.error('❌ Nie znaleziono elementu calendarList');
+        return;
+    }
+    
+    calendarList.style.display = 'block';
+    calendarGrid.style.display = 'none';
+    
+    const filteredGames = getFilteredGames();
+    
+    if (filteredGames.length === 0) {
+        calendarList.innerHTML = '';
+        noCalendarMessage.classList.remove('hidden');
+        return;
+    }
+    
+    noCalendarMessage.classList.add('hidden');
+    
+    calendarList.innerHTML = filteredGames.map(game => createReleaseCard(game)).join('');
+    
+    // Dodaj event listenery
+    addReleaseCardListeners();
+}
+
+// Tworzenie karty premiery
+function createReleaseCard(game) {
+    const releaseDate = new Date(game.releaseDate);
+    const today = new Date();
+    const timeDiff = releaseDate - today;
+    const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    
+    let dateClass = 'upcoming';
+    let dateText = formatDate(releaseDate);
+    
+    if (game.status === 'today') {
+        dateClass = 'today';
+        dateText = 'DZIŚ!';
+    } else if (game.status === 'past') {
+        dateClass = 'past';
+        dateText = formatDate(releaseDate);
+    }
+    
+    const countdownHtml = game.status === 'upcoming' && daysDiff <= 30 ? 
+        `<div class="release-countdown ${daysDiff <= 7 ? 'urgent' : ''}">
+            ${daysDiff > 0 ? `Za ${daysDiff} dni` : 'Już dostępne!'}
+        </div>` : '';
+    
+    const platformIcons = game.platforms.map(platform => {
+        const iconMap = {
+            'PC': 'fas fa-desktop',
+            'PlayStation 5': 'fab fa-playstation',
+            'PlayStation': 'fab fa-playstation',
+            'Xbox Series X/S': 'fab fa-xbox',
+            'Xbox': 'fab fa-xbox',
+            'Nintendo Switch': 'fas fa-gamepad'
+        };
+        return `<i class="${iconMap[platform] || 'fas fa-gamepad'}" title="${platform}"></i>`;
+    }).join('');
+    
+    return `
+        <div class="release-card" data-game="${game.name}">
+            <div class="release-header">
+                <h3 class="release-title">${game.name}</h3>
+                <div class="release-date ${dateClass}">${dateText}</div>
+            </div>
+            <div class="release-info">
+                <img src="${game.coverImage}" alt="${game.name}" class="release-cover" 
+                     onerror="this.src='./covers/placeholder.jpg'">
+                <div class="release-details">
+                    <h4>${game.developer}</h4>
+                    <p class="release-description">${game.description}</p>
+                    <div class="release-genres">
+                        ${game.genres.map(genre => `<span>${genre}</span>`).join('')}
+                    </div>
+                    <div class="release-platforms">
+                        ${platformIcons}
+                    </div>
+                    ${countdownHtml}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Wyświetlanie siatki kalendarza
+function displayCalendarGrid() {
+    const calendarList = document.getElementById('calendarList');
+    const calendarGrid = document.getElementById('calendarGrid');
+    
+    if (!calendarGrid) return;
+    
+    calendarList.style.display = 'none';
+    calendarGrid.style.display = 'block';
+    
+    updateCalendarHeader();
+    generateCalendarDays();
+}
+
+// Aktualizacja nagłówka kalendarza
+function updateCalendarHeader() {
+    const currentMonthEl = document.getElementById('calendarCurrentMonth');
+    if (currentMonthEl) {
+        const monthNames = [
+            'Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec',
+            'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'
+        ];
+        currentMonthEl.textContent = `${monthNames[currentCalendarDate.getMonth()]} ${currentCalendarDate.getFullYear()}`;
+    }
+}
+
+// Generowanie dni kalendarza
+function generateCalendarDays() {
+    const calendarDaysGrid = document.getElementById('calendarDaysGrid');
+    if (!calendarDaysGrid) return;
+    
+    const year = currentCalendarDate.getFullYear();
+    const month = currentCalendarDate.getMonth();
+    
+    // Pierwszy dzień miesiąca
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    
+    // Pierwszy poniedziałek do wyświetlenia
+    const startDate = new Date(firstDay);
+    const dayOfWeek = firstDay.getDay();
+    const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    startDate.setDate(firstDay.getDate() - daysToSubtract);
+    
+    const days = [];
+    const currentDate = new Date(startDate);
+    
+    // Generuj 42 dni (6 tygodni)
+    for (let i = 0; i < 42; i++) {
+        const dayData = {
+            date: new Date(currentDate),
+            isCurrentMonth: currentDate.getMonth() === month,
+            isToday: isToday(currentDate),
+            releases: getReleasesForDate(currentDate)
+        };
+        days.push(dayData);
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    
+    calendarDaysGrid.innerHTML = days.map(day => createCalendarDay(day)).join('');
+}
+
+// Tworzenie dnia kalendarza
+function createCalendarDay(dayData) {
+    const { date, isCurrentMonth, isToday, releases } = dayData;
+    
+    let classes = 'calendar-day';
+    if (!isCurrentMonth) classes += ' other-month';
+    if (isToday) classes += ' today';
+    if (releases.length > 0) classes += ' has-releases';
+    
+    const releasesText = releases.length > 0 ? 
+        `${releases.length} ${releases.length === 1 ? 'premiera' : 'premier'}` : '';
+    
+    const tooltip = releases.length > 0 ? 
+        `<div class="calendar-day-tooltip">${releases.map(r => r.name).join(', ')}</div>` : '';
+    
+    return `
+        <div class="${classes}" data-date="${date.toISOString().split('T')[0]}">
+            <div class="calendar-day-number">${date.getDate()}</div>
+            <div class="calendar-day-releases">${releasesText}</div>
+            ${tooltip}
+        </div>
+    `;
+}
+
+// Pomocnicze funkcje
+function isToday(date) {
+    const today = new Date();
+    return date.toDateString() === today.toDateString();
+}
+
+function getReleasesForDate(date) {
+    const dateStr = date.toISOString().split('T')[0];
+    return calendarData.filter(game => game.releaseDate === dateStr);
+}
+
+function formatDate(date) {
+    const options = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+    };
+    return date.toLocaleDateString('pl-PL', options);
+}
+
+// Filtrowanie gier
+function getFilteredGames() {
+    const monthFilter = document.getElementById('calendarMonthFilter')?.value;
+    const yearFilter = document.getElementById('calendarYearFilter')?.value;
+    const genreFilter = document.getElementById('calendarGenreFilter')?.value;
+    
+    return calendarData.filter(game => {
+        const releaseDate = new Date(game.releaseDate);
+        
+        // Filtr miesiąca
+        if (monthFilter !== 'all' && releaseDate.getMonth() !== parseInt(monthFilter)) {
+            return false;
+        }
+        
+        // Filtr roku
+        if (yearFilter !== 'all' && releaseDate.getFullYear() !== parseInt(yearFilter)) {
+            return false;
+        }
+        
+        // Filtr gatunku
+        if (genreFilter !== 'all') {
+            const genreMap = {
+                'action': 'Akcja',
+                'rpg': 'RPG',
+                'strategy': 'Strategia',
+                'adventure': 'Przygodowa',
+                'horror': 'Horror',
+                'indie': 'Indie'
+            };
+            const genreName = genreMap[genreFilter];
+            if (genreName && !game.genres.includes(genreName)) {
+                return false;
+            }
+        }
+        
+        return true;
+    });
+}
+
+// Inicjalizacja filtrów
+function initializeCalendarFilters() {
+    console.log('🔧 Inicjalizacja filtrów kalendarza...');
+    
+    // Sprawdź czy wszystkie elementy istnieją
+    const requiredElements = [
+        'calendarListView', 'calendarGridView', 'calendarList', 'calendarGrid',
+        'calendarMonthFilter', 'calendarYearFilter', 'calendarGenreFilter'
+    ];
+    
+    const missingElements = requiredElements.filter(id => !document.getElementById(id));
+    if (missingElements.length > 0) {
+        console.error('❌ Brakujące elementy DOM:', missingElements);
+        return;
+    }
+    
+    // Przełączanie widoków
+    const listViewBtn = document.getElementById('calendarListView');
+    const gridViewBtn = document.getElementById('calendarGridView');
+    
+    if (listViewBtn && gridViewBtn) {
+        listViewBtn.addEventListener('click', () => {
+            currentCalendarView = 'list';
+            listViewBtn.classList.add('active');
+            gridViewBtn.classList.remove('active');
+            displayCalendarList();
+        });
+        
+        gridViewBtn.addEventListener('click', () => {
+            currentCalendarView = 'grid';
+            gridViewBtn.classList.add('active');
+            listViewBtn.classList.remove('active');
+            displayCalendarGrid();
+        });
+    }
+    
+    // Filtry
+    const monthFilter = document.getElementById('calendarMonthFilter');
+    const yearFilter = document.getElementById('calendarYearFilter');
+    const genreFilter = document.getElementById('calendarGenreFilter');
+    
+    [monthFilter, yearFilter, genreFilter].forEach(filter => {
+        if (filter) {
+            filter.addEventListener('change', () => {
+                if (currentCalendarView === 'list') {
+                    displayCalendarList();
+                } else {
+                    displayCalendarGrid();
+                }
+            });
+        }
+    });
+    
+    // Przycisk "Dzisiaj"
+    const todayBtn = document.getElementById('calendarTodayBtn');
+    if (todayBtn) {
+        todayBtn.addEventListener('click', () => {
+            currentCalendarDate = new Date();
+            if (currentCalendarView === 'grid') {
+                displayCalendarGrid();
+            }
+            // Resetuj filtry
+            if (monthFilter) monthFilter.value = 'all';
+            if (yearFilter) yearFilter.value = 'all';
+            if (genreFilter) genreFilter.value = 'all';
+            if (currentCalendarView === 'list') {
+                displayCalendarList();
+            }
+        });
+    }
+    
+    // Przycisk eksportu
+    const exportBtn = document.getElementById('calendarExportBtn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', exportCalendarToICS);
+    }
+    
+    // Nawigacja kalendarza
+    const prevBtn = document.getElementById('calendarPrevMonth');
+    const nextBtn = document.getElementById('calendarNextMonth');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+            displayCalendarGrid();
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+            displayCalendarGrid();
+        });
+    }
+}
+
+// Event listenery dla kart premier
+function addReleaseCardListeners() {
+    document.querySelectorAll('.release-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const gameName = card.dataset.game;
+            const game = calendarData.find(g => g.name === gameName);
+            if (game) {
+                showGameReleaseDetails(game);
+            }
+        });
+    });
+}
+
+// Pokazywanie szczegółów premiery
+function showGameReleaseDetails(game) {
+    const releaseDate = new Date(game.releaseDate);
+    const today = new Date();
+    const timeDiff = releaseDate - today;
+    const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    
+    // Stwórz modal z szczegółami
+    const modal = document.createElement('div');
+    modal.className = 'calendar-details-modal';
+    modal.innerHTML = `
+        <div class="calendar-details-overlay"></div>
+        <div class="calendar-details-content">
+            <button class="calendar-details-close">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="calendar-details-header">
+                <img src="${game.coverImage}" alt="${game.name}" class="calendar-details-cover" 
+                     onerror="this.src='./covers/placeholder.jpg'">
+                <div class="calendar-details-info">
+                    <h2>${game.name}</h2>
+                    <p class="calendar-details-dev">${game.developer}</p>
+                    <div class="calendar-details-date ${game.status}">
+                        ${game.status === 'today' ? 'PREMIERA DZIŚ!' : 
+                          game.status === 'upcoming' ? `Za ${daysDiff} dni` : 
+                          'Już dostępne'}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calendar-details-body">
+                <p class="calendar-details-description">${game.description}</p>
+                
+                <div class="calendar-details-meta">
+                    <div><strong>Data premiery:</strong> ${formatDate(releaseDate)}</div>
+                    <div><strong>Wydawca:</strong> ${game.publisher}</div>
+                    <div><strong>Gatunki:</strong> ${game.genres.join(', ')}</div>
+                    <div><strong>Platformy:</strong> ${game.platforms.join(', ')}</div>
+                </div>
+                
+                <div class="calendar-details-actions">
+                    ${game.trailerUrl ? `
+                        <button class="calendar-action-btn trailer-btn" onclick="window.api.openLink('${game.trailerUrl}')">
+                            <i class="fas fa-play"></i> Obejrzyj trailer
+                        </button>
+                    ` : ''}
+                    <button class="calendar-action-btn wishlist-btn" onclick="addToWishlist('${game.name}')">
+                        <i class="fas fa-heart"></i> Dodaj do życzeń
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Event listeners
+    const closeBtn = modal.querySelector('.calendar-details-close');
+    const overlay = modal.querySelector('.calendar-details-overlay');
+    
+    const closeModal = () => {
+        modal.remove();
+    };
+    
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', closeModal);
+    
+    // Animacja pojawiania
+    setTimeout(() => modal.classList.add('show'), 10);
+}
+
+// Funkcja dodawania do wishlisty (placeholder)
+function addToWishlist(gameName) {
+    let wishlist = JSON.parse(localStorage.getItem('calendar-wishlist') || '[]');
+    
+    if (!wishlist.includes(gameName)) {
+        wishlist.push(gameName);
+        localStorage.setItem('calendar-wishlist', JSON.stringify(wishlist));
+        showToast(`${gameName} dodano do listy życzeń!`, 3000, 'success');
+    } else {
+        showToast(`${gameName} już jest na liście życzeń`, 3000, 'info');
+    }
+}
+
+// === KONIEC KALENDARZ PREMIER FUNCTIONALITY ===
+// === POWIADOMIENIA O PREMIERACH ===
+function checkUpcomingReleases() {
+    if (!calendarData || calendarData.length === 0) return;
+    
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const nextWeek = new Date(today);
+    nextWeek.setDate(nextWeek.getDate() + 7);
+    
+    // Sprawdź premiery na jutro
+    const tomorrowReleases = calendarData.filter(game => {
+        const releaseDate = new Date(game.releaseDate);
+        return releaseDate.toDateString() === tomorrow.toDateString();
+    });
+    
+    // Sprawdź premiery w tym tygodniu
+    const thisWeekReleases = calendarData.filter(game => {
+        const releaseDate = new Date(game.releaseDate);
+        return releaseDate > today && releaseDate <= nextWeek;
+    });
+    
+    // Pokaż powiadomienia
+    if (tomorrowReleases.length > 0) {
+        const gameNames = tomorrowReleases.map(g => g.name).join(', ');
+        showToast(`🎮 Jutro premiera: ${gameNames}`, 8000, 'info');
+        
+        // Powiadomienie systemowe
+        if (window.Notification && Notification.permission === 'granted') {
+            new Notification('Premiera jutro!', {
+                body: `${gameNames}`,
+                icon: 'icon.ico'
+            });
+        }
+    }
+    
+    if (thisWeekReleases.length > 0 && tomorrowReleases.length === 0) {
+        const count = thisWeekReleases.length;
+        showToast(`📅 W tym tygodniu ${count} ${count === 1 ? 'premiera' : 'premier'}`, 5000, 'info');
+    }
+}
+
+// Sprawdzaj powiadomienia co godzinę
+setInterval(checkUpcomingReleases, 60 * 60 * 1000);
+
+// === KONIEC POWIADOMIENIA O PREMIERACH ===
+// === EKSPORT KALENDARZA ===
+function exportCalendarToICS() {
+    if (!calendarData || calendarData.length === 0) {
+        showToast('Brak danych do eksportu', 3000, 'error');
+        return;
+    }
+    
+    let icsContent = 'BEGIN:VCALENDAR\n';
+    icsContent += 'VERSION:2.0\n';
+    icsContent += 'PRODID:-//AstroWorld//Calendar//EN\n';
+    icsContent += 'CALSCALE:GREGORIAN\n';
+    
+    calendarData.forEach(game => {
+        const releaseDate = new Date(game.releaseDate);
+        const dateStr = releaseDate.toISOString().replace(/[-:]/g, '').split('T')[0] + 'T000000Z';
+        
+        icsContent += 'BEGIN:VEVENT\n';
+        icsContent += `UID:${game.name.replace(/\s+/g, '-').toLowerCase()}@astroworld.app\n`;
+        icsContent += `DTSTART:${dateStr}\n`;
+        icsContent += `DTEND:${dateStr}\n`;
+        icsContent += `SUMMARY:Premiera: ${game.name}\n`;
+        icsContent += `DESCRIPTION:${game.description}\\n\\nDeweloper: ${game.developer}\\nGatunki: ${game.genres.join(', ')}\n`;
+        icsContent += `LOCATION:${game.platforms.join(', ')}\n`;
+        icsContent += 'END:VEVENT\n';
+    });
+    
+    icsContent += 'END:VCALENDAR';
+    
+    // Pobierz plik
+    const blob = new Blob([icsContent], { type: 'text/calendar' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'astroworld-premiery.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showToast('Kalendarz wyeksportowany!', 3000, 'success');
+}
+
+// === KONIEC EKSPORT KALENDARZA ===

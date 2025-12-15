@@ -48,6 +48,9 @@ contextBridge.exposeInMainWorld('api', {
     // Dodana funkcja do przełączania narzędzi deweloperskich
     toggleDevTools: () => ipcRenderer.send('toggle-dev-tools'),
 
+    // Calendar data
+    readCalendarData: () => ipcRenderer.invoke('read-calendar-data'),
+
     // Auto-updater functions
     checkForAppUpdates: () => ipcRenderer.invoke('check-for-app-updates'),
     downloadAppUpdate: () => ipcRenderer.invoke('download-app-update'),

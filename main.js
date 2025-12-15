@@ -451,6 +451,17 @@ app.whenReady().then(() => {
     }
   });
 
+  ipcMain.handle('read-calendar-data', async () => {
+    const jsonPath = path.join(app.getAppPath(), 'calendar_data.json');
+    try {
+      const data = await fs.promises.readFile(jsonPath, 'utf8');
+      return JSON.parse(data);
+    } catch (error) {
+      console.error('Błąd podczas czytania pliku calendar_data.json:', error);
+      return [];
+    }
+  });
+
   ipcMain.handle('get-system-info', () => {
     return {
       platform: os.platform(),

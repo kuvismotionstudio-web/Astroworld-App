@@ -54,6 +54,7 @@
             <nav class="sidebar-nav">
         <ul>
           <li><a href="#" class="sidebar-link active" id="homeLink" data-i18n="sidebar.home"><i class="fas fa-home"></i> Strona Główna</a></li>
+          <li><a href="#" class="sidebar-link" id="calendarLink" data-i18n="sidebar.calendar"><i class="fas fa-calendar-alt"></i> Kalendarz Premier</a></li>
           <li><a href="#" class="sidebar-link" id="uploadAppOpenBtn" data-i18n="sidebar.upload"><i class="fas fa-upload"></i> Upload Plików</a></li>
           <li><a href="#" class="sidebar-link" id="settingsProgramLink" data-i18n="sidebar.settings"><i class="fas fa-cogs"></i> Ustawienia</a></li>
           <li><a href="#" class="sidebar-link" id="aboutProgramLink" data-i18n="sidebar.about"><i class="fas fa-info-circle"></i> O Programie</a></li>
@@ -132,6 +133,97 @@
                     <!-- Games will be loaded here by JavaScript -->
                 </div>
                 <div id="noFreeToPlayMessage" class="info-message hidden">Brak gier do wyświetlenia.</div>
+            </div>
+
+            <!-- Calendar Premier Section -->
+            <div id="calendarPage" class="page-section hidden">
+                <h1 class="astroworld-fancy" data-i18n="calendar.title">Kalendarz Premier</h1>
+                
+                <!-- Filtry kalendarza -->
+                <div class="controls">
+                    <select id="calendarMonthFilter" class="category-select">
+                        <option value="all" data-i18n="calendar.allMonths">Wszystkie miesiące</option>
+                        <option value="0">Styczeń</option>
+                        <option value="1">Luty</option>
+                        <option value="2">Marzec</option>
+                        <option value="3">Kwiecień</option>
+                        <option value="4">Maj</option>
+                        <option value="5">Czerwiec</option>
+                        <option value="6">Lipiec</option>
+                        <option value="7">Sierpień</option>
+                        <option value="8">Wrzesień</option>
+                        <option value="9">Październik</option>
+                        <option value="10">Listopad</option>
+                        <option value="11">Grudzień</option>
+                    </select>
+                    <select id="calendarYearFilter" class="category-select">
+                        <option value="all" data-i18n="calendar.allYears">Wszystkie lata</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                    </select>
+                    <select id="calendarGenreFilter" class="category-select">
+                        <option value="all" data-i18n="calendar.allGenres">Wszystkie gatunki</option>
+                        <option value="action">Akcja</option>
+                        <option value="rpg">RPG</option>
+                        <option value="strategy">Strategia</option>
+                        <option value="adventure">Przygodowa</option>
+                        <option value="horror">Horror</option>
+                        <option value="indie">Indie</option>
+                    </select>
+                    <button id="calendarTodayBtn" class="refresh-btn">
+                        <i class="fas fa-calendar-day"></i> Dzisiaj
+                    </button>
+                    <button id="calendarExportBtn" class="refresh-btn">
+                        <i class="fas fa-download"></i> Eksportuj
+                    </button>
+                </div>
+
+                <!-- Widok kalendarza -->
+                <div class="calendar-view-switcher">
+                    <button id="calendarListView" class="view-btn active">
+                        <i class="fas fa-list"></i> Lista
+                    </button>
+                    <button id="calendarGridView" class="view-btn">
+                        <i class="fas fa-calendar"></i> Kalendarz
+                    </button>
+                </div>
+
+                <!-- Lista premier -->
+                <div id="calendarLoading" class="loading-indicator hidden">
+                    <i class="fas fa-spinner fa-spin"></i> Ładowanie kalendarza...
+                </div>
+
+                <div id="calendarList" class="calendar-releases-list">
+                    <!-- Premiery będą ładowane przez JavaScript -->
+                </div>
+
+                <!-- Widok kalendarza (siatka) -->
+                <div id="calendarGrid" class="calendar-grid hidden">
+                    <div class="calendar-header">
+                        <button id="calendarPrevMonth" class="calendar-nav-btn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="calendarCurrentMonth">Grudzień 2025</h3>
+                        <button id="calendarNextMonth" class="calendar-nav-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-days-header">
+                        <div class="calendar-day-name">Pon</div>
+                        <div class="calendar-day-name">Wt</div>
+                        <div class="calendar-day-name">Śr</div>
+                        <div class="calendar-day-name">Czw</div>
+                        <div class="calendar-day-name">Pt</div>
+                        <div class="calendar-day-name">Sob</div>
+                        <div class="calendar-day-name">Nie</div>
+                    </div>
+                    <div id="calendarDaysGrid" class="calendar-days-grid">
+                        <!-- Dni kalendarza będą generowane przez JavaScript -->
+                    </div>
+                </div>
+
+                <div id="noCalendarMessage" class="info-message hidden">Brak premier w wybranym okresie.</div>
             </div>
 
             <!-- Kontener na główną zawartość (lista gier) -->

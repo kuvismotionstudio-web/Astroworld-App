@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Grand Theft Auto VI",
+    "description": "Długo oczekiwana kontynuacja kultowej serii GTA. Powrót do Vice City z nowymi postaciami i rozbudowanym światem otwartym.",
+    "releaseDate": "2026-11-25",
+    "genres": ["Akcja", "Przygodowa", "Otwarty świat"],
+    "platforms": ["PC", "PlayStation 5", "Xbox Series X/S"],
+    "developer": "Rockstar Games",
+    "publisher": "Rockstar Games",
+    "coverImage": "covers/gta6.jpg",
+    "trailerUrl": "https://www.youtube.com/embed/QdBZY2fkU-0",
+    "status": "upcoming",
+    "hypeLevel": 5
+  }
+]

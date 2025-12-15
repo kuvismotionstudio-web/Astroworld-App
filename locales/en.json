@@ -94,5 +94,45 @@
     "updateAvailable": "Update available for {game}",
     "downloadComplete": "Download complete: {file}",
     "downloadFailed": "Download failed: {file}"
+  },
+  "calendar": {
+    "title": "Release Calendar",
+    "allMonths": "All months",
+    "allYears": "All years", 
+    "allGenres": "All genres",
+    "listView": "List",
+    "gridView": "Calendar",
+    "today": "Today",
+    "upcoming": "Upcoming",
+    "past": "Past",
+    "noReleases": "No releases in selected period",
+    "daysRemaining": "Days remaining",
+    "releaseToday": "RELEASE TODAY!",
+    "alreadyReleased": "Already released",
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March", 
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    },
+    "genres": {
+      "action": "Action",
+      "rpg": "RPG", 
+      "strategy": "Strategy",
+      "adventure": "Adventure",
+      "horror": "Horror",
+      "indie": "Indie",
+      "simulation": "Simulation",
+      "sports": "Sports",
+      "racing": "Racing"
+    }
   }
 }

@@ -94,5 +94,45 @@
     "updateAvailable": "Dostępna aktualizacja gry {game}",
     "downloadComplete": "Pobieranie zakończone: {file}",
     "downloadFailed": "Błąd pobierania: {file}"
+  },
+  "calendar": {
+    "title": "Kalendarz Premier",
+    "allMonths": "Wszystkie miesiące",
+    "allYears": "Wszystkie lata",
+    "allGenres": "Wszystkie gatunki",
+    "listView": "Lista",
+    "gridView": "Kalendarz",
+    "today": "Dzisiaj",
+    "upcoming": "Nadchodzące",
+    "past": "Przeszłe",
+    "noReleases": "Brak premier w wybranym okresie",
+    "daysRemaining": "Pozostało dni",
+    "releaseToday": "PREMIERA DZIŚ!",
+    "alreadyReleased": "Już dostępne",
+    "months": {
+      "january": "Styczeń",
+      "february": "Luty", 
+      "march": "Marzec",
+      "april": "Kwiecień",
+      "may": "Maj",
+      "june": "Czerwiec",
+      "july": "Lipiec",
+      "august": "Sierpień",
+      "september": "Wrzesień",
+      "october": "Październik",
+      "november": "Listopad",
+      "december": "Grudzień"
+    },
+    "genres": {
+      "action": "Akcja",
+      "rpg": "RPG",
+      "strategy": "Strategia",
+      "adventure": "Przygodowa",
+      "horror": "Horror",
+      "indie": "Indie",
+      "simulation": "Symulacja",
+      "sports": "Sport",
+      "racing": "Wyścigi"
+    }
   }
 }

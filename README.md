@@ -19,6 +19,7 @@ AstroWorld to nie tylko kolejny pobierator - to kompletne centrum gier, które �
 
 ### 🎮 Zarządzanie grami
 - **Biblioteka gier** - Przeglądaj i organizuj swoją kolekcję gier
+- **Kalendarz premier** - Śledź nadchodzące premiery gier z powiadomieniami
 - **Szczegółowe informacje** - Wyświetlanie wymagań systemowych, opisów i zrzutów ekranu
 - **Gra tygodnia** - System rekomendacji wyróżniających wybrane tytuły
 - **Kategorie i filtry** - Zaawansowane sortowanie i wyszukiwanie
