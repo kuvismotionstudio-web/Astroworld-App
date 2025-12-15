@@ -2,7 +2,7 @@
 
 **Najlepszy pobierator gier na Windows z wbudowanym klientem torrent**
 
-[![Version](https://img.shields.io/badge/version-1.0.8-blue.svg)](https://github.com/kuvismotionstudio-web/Astroworld-App/releases)
+[![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](https://github.com/kuvismotionstudio-web/Astroworld-App/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)](#)
 [![License](https://img.shields.io/badge/license-ISC-green.svg)](LICENSE)
 [![Discord](https://img.shields.io/discord/YOUR_DISCORD_ID?color=7289da&label=Discord&logo=discord&logoColor=white)](https://discord.gg/UBhtYzNu)
