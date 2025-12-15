@@ -5591,7 +5591,7 @@ body.modal-open {
 }
 
 /* ===============================================
-   🔥 CYBERPUNK AUTO-UPDATE MODAL STYLES
+   🚀 UPDATE MODAL STYLES - SIMPLE & CLEAN
    =============================================== */
 
 .update-modal {
@@ -5600,13 +5600,14 @@ body.modal-open {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 10000;
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10000;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.3s ease;
 }
 
 .update-modal:not(.hidden) {
@@ -5620,62 +5621,27 @@ body.modal-open {
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
-        radial-gradient(circle at 20% 80%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
-        rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    animation: cyberpunkOverlay 3s ease-in-out infinite alternate;
-}
-
-@keyframes cyberpunkOverlay {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 100% 100%; }
+    background: rgba(0, 0, 0, 0.9);
 }
 
 .update-modal-content {
     position: relative;
-    background: #000000;
-    border: 2px solid #ff0000;
-    border-radius: 15px;
-    padding: 0;
-    max-width: 520px;
+    background: #000;
+    border: 2px solid #ff0033;
+    border-radius: 12px;
     width: 90%;
-    max-height: 85vh;
-    overflow: hidden;
+    max-width: 450px;
+    padding: 40px 30px;
+    text-align: center;
     box-shadow: 
-        0 0 50px rgba(255, 0, 0, 0.5),
-        0 0 100px rgba(255, 0, 0, 0.2),
-        inset 0 0 50px rgba(255, 0, 0, 0.1),
-        0 25px 50px rgba(0, 0, 0, 0.8);
-    transform: scale(0.7) translateY(100px) rotateX(15deg);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    animation: cyberpunkEntry 0.8s ease-out forwards;
-    position: relative;
-}
-
-.update-modal-content::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #ff0000, #ff3333, #ff0000, #cc0000);
-    border-radius: 15px;
-    z-index: -1;
-    animation: cyberpunkBorder 2s linear infinite;
-}
-
-@keyframes cyberpunkBorder {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+        0 20px 40px rgba(0, 0, 0, 0.8),
+        0 0 20px rgba(255, 0, 51, 0.4);
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.3s ease;
 }
 
 .update-modal:not(.hidden) .update-modal-content {
-    transform: scale(1) translateY(0) rotateX(0deg);
+    transform: scale(1) translateY(0);
 }
 
 @keyframes cyberpunkEntry {
@@ -5730,30 +5696,7 @@ body.modal-open {
     75% { transform: rotate(180deg) scale(1.1) translateX(-2px); }
 }
 
-.update-header {
-    text-align: center;
-    padding: 40px 30px 25px;
-    background: #000000;
-    border-bottom: 2px solid #ff0000;
-    position: relative;
-    overflow: hidden;
-}
-
-.update-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.2), transparent);
-    animation: cyberpunkScan 3s ease-in-out infinite;
-}
-
-@keyframes cyberpunkScan {
-    0% { left: -100%; }
-    100% { left: 100%; }
-}
+/* Stare style usunięte - zastąpione nowymi prostymi stylami */
 
 .update-icon {
     width: 90px;
@@ -6119,6 +6062,142 @@ body.dark-theme .update-modal-content {
 
 .update-modal:not(.hidden) {
     pointer-events: all;
+}
+
+/* Close button */
+.close-update-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: 1px solid #ff0033;
+    color: #ff0033;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.close-update-modal:hover {
+    background: #ff0033;
+    color: #fff;
+}
+
+/* Logo AstroWorld */
+.update-logo {
+    margin-bottom: 20px;
+}
+
+.update-logo img {
+    filter: drop-shadow(0 0 10px rgba(255, 0, 51, 0.5));
+    animation: logoGlow 2s ease-in-out infinite alternate;
+    border-radius: 8px;
+}
+
+@keyframes logoGlow {
+    0% { filter: drop-shadow(0 0 10px rgba(255, 0, 51, 0.5)); }
+    100% { filter: drop-shadow(0 0 20px rgba(255, 0, 51, 0.8)); }
+}
+
+/* Tytuł */
+.update-title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    text-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
+}
+
+.update-version-info {
+    color: #ccc;
+    font-size: 16px;
+    margin: 0 0 25px 0;
+}
+
+/* Changelog */
+.update-changelog {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.changelog-content {
+    background: rgba(255, 0, 51, 0.1);
+    border: 1px solid rgba(255, 0, 51, 0.3);
+    border-radius: 8px;
+    padding: 15px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.5;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+/* Pasek postępu */
+.update-progress {
+    margin: 20px 0;
+}
+
+.progress-bar {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #ff0033, #ff3366);
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
+}
+
+.progress-text {
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Przycisk aktualizacji */
+.update-btn {
+    background: linear-gradient(135deg, #ff0033, #cc0029);
+    border: none;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 0, 51, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.update-btn:hover {
+    background: linear-gradient(135deg, #ff3366, #ff0033);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 0, 51, 0.5);
+}
+
+.update-btn:active {
+    transform: translateY(0);
+}
+
+.update-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
 /* ===============================================

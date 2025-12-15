@@ -77,38 +77,33 @@
                         <i class="fas fa-times"></i>
                     </button>
                     
-                    <div class="update-header">
-                        <div class="update-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <h2 class="update-title">🚀 Nowa wersja dostępna!</h2>
-                        <p id="updateModalInfo" class="update-version-info">Dostępna jest nowa wersja aplikacji.</p>
+                    <!-- Logo AstroWorld -->
+                    <div class="update-logo">
+                        <img src="icon.ico" alt="AstroWorld" width="80" height="80">
                     </div>
                     
-                    <div class="update-body">
-                        <div id="updateChangelog" class="update-changelog">
-                            <h4><i class="fas fa-list"></i> Co nowego:</h4>
-                            <div class="changelog-content"></div>
-                        </div>
-                        
-                        <div class="update-progress hidden" id="updateProgress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progressFill"></div>
-                            </div>
-                            <div class="progress-text" id="progressText">Pobieranie... 0%</div>
-                        </div>
+                    <!-- Tytuł -->
+                    <h2 class="update-title">Dostępna nowa wersja!</h2>
+                    <p id="updateModalInfo" class="update-version-info">Wersja 1.0.9 jest gotowa do pobrania</p>
+                    
+                    <!-- Opis zmian -->
+                    <div id="updateChangelog" class="update-changelog">
+                        <div class="changelog-content"></div>
                     </div>
                     
-                    <div class="update-footer">
-                        <button id="updateDownloadBtn" class="update-download-btn">
-                            <i class="fas fa-download"></i>
-                            <span>Pobierz aktualizację</span>
-                        </button>
-                        <button class="update-later-btn close-update-modal">
-                            <i class="fas fa-clock"></i>
-                            <span>Później</span>
-                        </button>
+                    <!-- Pasek postępu (ukryty domyślnie) -->
+                    <div class="update-progress hidden" id="updateProgress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Pobieranie... 0%</div>
                     </div>
+                    
+                    <!-- Przycisk aktualizacji -->
+                    <button id="updateDownloadBtn" class="update-btn">
+                        <i class="fas fa-download"></i>
+                        <span>Zaktualizuj i uruchom ponownie</span>
+                    </button>
                 </div>
             </div>
             <!-- Free to Play Section -->

@@ -111,21 +111,30 @@ function showUpdateModal(updateInfo) {
   const modalInfo = document.getElementById('updateModalInfo');
   const changelog = document.getElementById('updateChangelog');
   const downloadBtn = document.getElementById('updateDownloadBtn');
-  const modalContent = modal?.querySelector('.update-modal-content');
   
   if (modal && modalInfo && downloadBtn) {
-    modalInfo.innerHTML = `Dostępna jest <strong>wersja ${updateInfo.version}</strong>`;
+    modalInfo.innerHTML = `Wersja ${updateInfo.version} jest gotowa do pobrania`;
     
-    // Cyberpunk changelog content
+    // Wyświetl changelog
     if (changelog && updateInfo.releaseNotes) {
       const changelogContent = changelog.querySelector('.changelog-content');
       if (changelogContent) {
-        changelogContent.innerHTML = updateInfo.releaseNotes || 'SYSTEM_UPDATE.exe<br>• Enhanced performance protocols<br>• Security patches applied<br>• New neural interfaces';
+        // Parsuj release notes
+        let notes = updateInfo.releaseNotes;
+        if (typeof notes === 'string') {
+          notes = notes.split('\n').filter(line => line.trim());
+        }
+        
+        if (Array.isArray(notes) && notes.length > 0) {
+          changelogContent.innerHTML = notes.map(note => `<div>• ${note}</div>`).join('');
+        } else {
+          changelogContent.innerHTML = '<div>• Poprawki błędów i ulepszenia wydajności</div><div>• Nowe funkcje i optymalizacje</div>';
+        }
       }
     } else {
       const changelogContent = changelog.querySelector('.changelog-content');
       if (changelogContent) {
-        changelogContent.innerHTML = 'SYSTEM_UPDATE.exe<br>• Enhanced performance protocols<br>• Security patches applied<br>• New neural interfaces<br>• Bug fixes and optimizations';
+        changelogContent.innerHTML = '<div>• Poprawki błędów i ulepszenia wydajności</div><div>• Nowe funkcje i optymalizacje</div><div>• Aktualizacje bezpieczeństwa</div>';
       }
     }
     
@@ -133,17 +142,9 @@ function showUpdateModal(updateInfo) {
     const btnIcon = downloadBtn.querySelector('i');
     const btnText = downloadBtn.querySelector('span');
     if (btnIcon) btnIcon.className = 'fas fa-download';
-    if (btnText) btnText.textContent = 'Initialize Download';
+    if (btnText) btnText.textContent = 'Zaktualizuj i uruchom ponownie';
     downloadBtn.disabled = false;
     downloadBtn.onclick = () => downloadAppUpdate();
-    
-    // Add cyberpunk glitch effect
-    if (modalContent) {
-      setTimeout(() => {
-        modalContent.classList.add('glitch');
-        setTimeout(() => modalContent.classList.remove('glitch'), 300);
-      }, 500);
-    }
     
     modal.classList.remove('hidden');
     isUpdateAvailable = true;
@@ -160,7 +161,7 @@ async function downloadAppUpdate() {
       const btnIcon = downloadBtn.querySelector('i');
       const btnText = downloadBtn.querySelector('span');
       if (btnIcon) btnIcon.className = 'fas fa-spinner fa-spin';
-      if (btnText) btnText.innerHTML = 'Downloading<span class="cyberpunk-loading">...</span>';
+      if (btnText) btnText.textContent = 'Pobieranie...';
       downloadBtn.disabled = true;
     }
     
@@ -180,7 +181,7 @@ async function downloadAppUpdate() {
       const btnIcon = downloadBtn.querySelector('i');
       const btnText = downloadBtn.querySelector('span');
       if (btnIcon) btnIcon.className = 'fas fa-download';
-      if (btnText) btnText.textContent = 'Pobierz aktualizację';
+      if (btnText) btnText.textContent = 'Zaktualizuj i uruchom ponownie';
       downloadBtn.disabled = false;
     }
   }
@@ -211,13 +212,13 @@ function updateDownloadProgressBar(progress) {
   if (progressText) {
     const mbTransferred = (progress.transferred / 1024 / 1024).toFixed(1);
     const mbTotal = (progress.total / 1024 / 1024).toFixed(1);
-    progressText.textContent = `DOWNLOADING... ${progress.percent}% [${mbTransferred}MB / ${mbTotal}MB]`;
+    progressText.textContent = `Pobieranie... ${progress.percent}% [${mbTransferred}MB / ${mbTotal}MB]`;
   }
   
   if (downloadBtn) {
     const btnText = downloadBtn.querySelector('span');
     if (btnText) {
-      btnText.innerHTML = `Downloading... ${progress.percent}%<span class="cyberpunk-loading">...</span>`;
+      btnText.textContent = `Pobieranie... ${progress.percent}%`;
     }
   }
 }
