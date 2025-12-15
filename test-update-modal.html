@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Modalu Aktualizacji - AstroWorld</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .test-button {
+            background: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background 0.3s;
+        }
+        .test-button:hover {
+            background: #cc0000;
+        }
+        .info {
+            background: #222;
+            border: 1px solid #ff0000;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🚀 Test Modalu Aktualizacji AstroWorld - Modern Design</h1>
+        
+        <div class="info">
+            <h3>Instrukcje testowania:</h3>
+            <p>Kliknij przycisk poniżej, aby wyświetlić modal aktualizacji w różnych stanach z nowym, nowoczesnym designem.</p>
+        </div>
+
+        <button class="test-button" onclick="showUpdateAvailable()">
+            <i class="fas fa-download"></i> Pokaż: Dostępna aktualizacja
+        </button>
+        
+        <button class="test-button" onclick="showUpdateDownloading()">
+            <i class="fas fa-spinner fa-spin"></i> Pokaż: Pobieranie aktualizacji
+        </button>
+        
+        <button class="test-button" onclick="showUpdateDownloaded()">
+            <i class="fas fa-rocket"></i> Pokaż: Aktualizacja pobrana
+        </button>
+        
+        <button class="test-button" onclick="hideModal()">
+            <i class="fas fa-times"></i> Ukryj modal
+        </button>
+        
+        <button class="test-button" onclick="toggleDarkMode()">
+            <i class="fas fa-moon"></i> Przełącz tryb ciemny
+        </button>
+    </div></function>
+</invoke>
+
+    <!-- Modal aktualizacji (skopiowany z index.html) -->
+    <div id="updateModal" class="update-modal hidden">
+        <div class="update-modal-overlay"></div>
+        <div class="update-modal-content">
+            <button class="close-update-modal" title="Zamknij" onclick="hideModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- Logo AstroWorld -->
+            <div class="update-logo">
+                <img src="icon.ico" alt="AstroWorld" width="80" height="80">
+            </div>
+            
+            <!-- Tytuł -->
+            <h2 class="update-title">Dostępna nowa wersja!</h2>
+            <p id="updateModalInfo" class="update-version-info">Wersja 1.0.9 jest gotowa do pobrania</p>
+            
+            <!-- Opis zmian -->
+            <div id="updateChangelog" class="update-changelog">
+                <div class="changelog-content">
+                    <div>• Poprawki błędów i ulepszenia wydajności</div>
+                    <div>• Nowe funkcje i optymalizacje</div>
+                    <div>• Aktualizacje bezpieczeństwa</div>
+                    <div>• Ulepszona obsługa modalu aktualizacji</div>
+                    <div>• Dodano nowe ramki do informacji o grach</div>
+                </div>
+            </div>
+            
+            <!-- Pasek postępu (ukryty domyślnie) -->
+            <div class="update-progress hidden" id="updateProgress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                </div>
+                <div class="progress-text" id="progressText">Pobieranie... 0%</div>
+            </div>
+            
+            <!-- Przycisk aktualizacji -->
+            <button id="updateDownloadBtn" class="update-btn">
+                <i class="fas fa-download"></i>
+                <span>Zaktualizuj i uruchom ponownie</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Funkcje testowe
+        function showUpdateAvailable() {
+            const modal = document.getElementById('updateModal');
+            const downloadBtn = document.getElementById('updateDownloadBtn');
+            const progressDiv = document.getElementById('updateProgress');
+            const modalInfo = document.getElementById('updateModalInfo');
+            
+            // Reset do stanu początkowego
+            modalInfo.textContent = 'Wersja 1.2.5 jest gotowa do pobrania';
+            progressDiv.classList.add('hidden');
+            
+            const btnIcon = downloadBtn.querySelector('i');
+            const btnText = downloadBtn.querySelector('span');
+            btnIcon.className = 'fas fa-download';
+            btnText.textContent = 'Zaktualizuj i uruchom ponownie';
+            downloadBtn.disabled = false;
+            downloadBtn.onclick = () => showUpdateDownloading();
+            
+            modal.classList.remove('hidden');
+        }
+        
+        function showUpdateDownloading() {
+            const downloadBtn = document.getElementById('updateDownloadBtn');
+            const progressDiv = document.getElementById('updateProgress');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            // Zmień przycisk na pobieranie
+            const btnIcon = downloadBtn.querySelector('i');
+            const btnText = downloadBtn.querySelector('span');
+            btnIcon.className = 'fas fa-spinner fa-spin';
+            btnText.textContent = 'Pobieranie...';
+            downloadBtn.disabled = true;
+            
+            // Pokaż pasek postępu
+            progressDiv.classList.remove('hidden');
+            
+            // Symuluj postęp pobierania
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => showUpdateDownloaded(), 500);
+                }
+                progressFill.style.width = progress + '%';
+                progressText.classList.remove('completed'); // Usuń klasę completed podczas pobierania
+                progressText.textContent = `Pobieranie... ${Math.round(progress)}%`;
+            }, 200);
+        }
+        
+        function showUpdateDownloaded() {
+            const downloadBtn = document.getElementById('updateDownloadBtn');
+            const progressText = document.getElementById('progressText');
+            
+            // Zmień przycisk na gotowy do instalacji
+            const btnIcon = downloadBtn.querySelector('i');
+            const btnText = downloadBtn.querySelector('span');
+            btnIcon.className = 'fas fa-rocket';
+            btnText.textContent = 'Zainstaluj i uruchom ponownie';
+            downloadBtn.disabled = false;
+            downloadBtn.onclick = () => {
+                alert('W prawdziwej aplikacji tutaj nastąpiłby restart!');
+                hideModal();
+            };
+            
+            progressText.textContent = '✅ Aktualizacja pobrana - Kliknij aby zainstalować';
+            progressText.classList.add('completed');
+        }
+        
+        function hideModal() {
+            const modal = document.getElementById('updateModal');
+            modal.classList.add('hidden');
+        }
+        
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-theme');
+        }
+        
+        // Zamknij modal po kliknięciu w tło
+        document.getElementById('updateModal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('update-modal-overlay') || e.target.id === 'updateModal') {
+                hideModal();
+            }
+        });
+    </script>
+</body>
+</html>

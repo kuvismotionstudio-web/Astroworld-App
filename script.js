@@ -191,11 +191,55 @@ async function downloadAppUpdate() {
 async function installAppUpdate() {
   try {
     console.log('🚀 Rozpoczynam instalację aktualizacji...');
-    showToast('Instalowanie aktualizacji...', 2000, 'info');
-    await window.api.installAppUpdate();
+    
+    // Zmień przycisk na loading
+    const downloadBtn = document.getElementById('updateDownloadBtn');
+    if (downloadBtn) {
+      const btnIcon = downloadBtn.querySelector('i');
+      const btnText = downloadBtn.querySelector('span');
+      if (btnIcon) btnIcon.className = 'fas fa-spinner fa-spin';
+      if (btnText) btnText.textContent = 'Instalowanie...';
+      downloadBtn.disabled = true;
+    }
+    
+    showToast('Instalowanie aktualizacji i restart aplikacji...', 3000, 'info');
+    
+    const result = await window.api.installAppUpdate();
+    
+    if (result && result.success) {
+      console.log('✅ Aktualizacja zainstalowana pomyślnie');
+      showToast('Aktualizacja zainstalowana! Aplikacja zostanie uruchomiona ponownie...', 5000, 'success');
+      
+      // Jeśli aplikacja nie zamknęła się automatycznie po 3 sekundach, pokaż komunikat
+      setTimeout(() => {
+        showToast('Jeśli aplikacja nie uruchomiła się ponownie, uruchom ją ręcznie.', 5000, 'warning');
+      }, 3000);
+    } else {
+      console.error('❌ Błąd instalacji:', result?.error || 'Nieznany błąd');
+      showToast('Błąd podczas instalacji aktualizacji: ' + (result?.error || 'Nieznany błąd'), 5000, 'error');
+      
+      // Przywróć przycisk
+      if (downloadBtn) {
+        const btnIcon = downloadBtn.querySelector('i');
+        const btnText = downloadBtn.querySelector('span');
+        if (btnIcon) btnIcon.className = 'fas fa-rocket';
+        if (btnText) btnText.textContent = 'Zainstaluj i uruchom ponownie';
+        downloadBtn.disabled = false;
+      }
+    }
   } catch (error) {
-    console.error('Błąd instalacji aktualizacji:', error);
-    showToast('Błąd podczas instalacji aktualizacji', 3000, 'error');
+    console.error('❌ Błąd instalacji aktualizacji:', error);
+    showToast('Błąd podczas instalacji aktualizacji: ' + error.message, 5000, 'error');
+    
+    // Przywróć przycisk
+    const downloadBtn = document.getElementById('updateDownloadBtn');
+    if (downloadBtn) {
+      const btnIcon = downloadBtn.querySelector('i');
+      const btnText = downloadBtn.querySelector('span');
+      if (btnIcon) btnIcon.className = 'fas fa-rocket';
+      if (btnText) btnText.textContent = 'Zainstaluj i uruchom ponownie';
+      downloadBtn.disabled = false;
+    }
   }
 }
 
@@ -210,6 +254,7 @@ function updateDownloadProgressBar(progress) {
   }
   
   if (progressText) {
+    progressText.classList.remove('completed'); // Usuń klasę completed podczas pobierania
     const mbTransferred = (progress.transferred / 1024 / 1024).toFixed(1);
     const mbTotal = (progress.total / 1024 / 1024).toFixed(1);
     progressText.textContent = `Pobieranie... ${progress.percent}% [${mbTransferred}MB / ${mbTotal}MB]`;
@@ -1169,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Aktualizacja pobrana
         window.api.onUpdateDownloaded((info) => {
-            console.log('Aktualizacja pobrana:', info);
+            console.log('✅ Aktualizacja pobrana:', info);
             const downloadBtn = document.getElementById('updateDownloadBtn');
             const progressDiv = document.getElementById('updateProgress');
             
@@ -1177,19 +1222,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 const btnIcon = downloadBtn.querySelector('i');
                 const btnText = downloadBtn.querySelector('span');
                 if (btnIcon) btnIcon.className = 'fas fa-rocket';
-                if (btnText) btnText.textContent = 'Execute & Restart';
+                if (btnText) btnText.textContent = 'Zainstaluj i uruchom ponownie';
                 downloadBtn.disabled = false;
-                downloadBtn.onclick = () => installAppUpdate();
+                downloadBtn.onclick = () => {
+                    console.log('🚀 Kliknięto przycisk instalacji aktualizacji');
+                    installAppUpdate();
+                };
             }
             
             if (progressDiv) {
                 const progressFill = document.getElementById('progressFill');
                 const progressText = document.getElementById('progressText');
                 if (progressFill) progressFill.style.width = '100%';
-                if (progressText) progressText.textContent = 'DOWNLOAD COMPLETE ✅ READY TO INSTALL';
+                if (progressText) {
+                    progressText.textContent = '✅ Aktualizacja pobrana - Kliknij aby zainstalować';
+                    progressText.classList.add('completed');
+                }
             }
             
-            showToast('Aktualizacja pobrana! Kliknij aby zainstalować.', 10000, 'success');
+            showToast('Aktualizacja pobrana! Kliknij przycisk aby zainstalować i uruchomić ponownie.', 10000, 'success');
         });
 
         // Błąd aktualizacji

@@ -176,10 +176,14 @@ autoUpdater.on('download-progress', (progressObj) => {
 });
 
 autoUpdater.on('update-downloaded', (info) => {
-  console.log('Aktualizacja pobrana, gotowa do instalacji');
+  console.log('✅ Aktualizacja pobrana, gotowa do instalacji. Wersja:', info.version);
+  console.log('📦 Informacje o aktualizacji:', JSON.stringify(info, null, 2));
+  
   if (win && !win.isDestroyed()) {
     win.webContents.send('update-downloaded', {
-      version: info.version
+      version: info.version,
+      releaseDate: info.releaseDate,
+      releaseNotes: info.releaseNotes
     });
   }
 });
@@ -509,7 +513,27 @@ app.whenReady().then(() => {
 
   ipcMain.handle('install-app-update', () => {
     try {
-      autoUpdater.quitAndInstall();
+      console.log('🚀 Instalowanie aktualizacji i restart aplikacji...');
+      
+      // Sprawdź czy aktualizacja została pobrana
+      if (!autoUpdater.downloadedUpdateHelper) {
+        console.log('⚠️ Próba instalacji bez pobranej aktualizacji, pobieranie...');
+        autoUpdater.downloadUpdate();
+        return { success: false, error: 'Aktualizacja nie została jeszcze pobrana' };
+      }
+      
+      // Użyj setImmediate aby upewnić się, że odpowiedź zostanie wysłana przed zamknięciem
+      setImmediate(() => {
+        console.log('🔄 Wywołuję quitAndInstall...');
+        try {
+          autoUpdater.quitAndInstall(false, true); // isSilent = false, isForceRunAfter = true
+        } catch (quitError) {
+          console.error('❌ Błąd quitAndInstall:', quitError);
+          // Alternatywna metoda - zamknij aplikację ręcznie
+          app.quit();
+        }
+      });
+      
       return { success: true };
     } catch (error) {
       console.error('Błąd instalacji aktualizacji:', error);

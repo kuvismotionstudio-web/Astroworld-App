@@ -5603,7 +5603,7 @@ body.modal-open {
 }
 
 /* ===============================================
-   🚀 UPDATE MODAL STYLES - SIMPLE & CLEAN
+   🚀 UPDATE MODAL STYLES - MODERN & CLEAN
    =============================================== */
 
 .update-modal {
@@ -5612,14 +5612,15 @@ body.modal-open {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10000;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .update-modal:not(.hidden) {
@@ -5633,61 +5634,42 @@ body.modal-open {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .update-modal-content {
     position: relative;
-    background: #000;
-    border: 2px solid #ff0033;
-    border-radius: 12px;
+    background: #000000;
+    border: 2px solid #ff0000;
+    border-radius: 20px;
     width: 90%;
-    max-width: 450px;
-    padding: 40px 30px;
+    max-width: 480px;
+    padding: 0;
     text-align: center;
-    box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.8),
-        0 0 20px rgba(255, 0, 51, 0.4);
-    transform: scale(0.9) translateY(20px);
-    transition: all 0.3s ease;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+    transform: scale(0.95) translateY(30px);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
 }
 
 .update-modal:not(.hidden) .update-modal-content {
     transform: scale(1) translateY(0);
 }
 
-@keyframes cyberpunkEntry {
-    0% {
-        transform: scale(0.7) translateY(100px) rotateX(15deg);
-        opacity: 0;
-        filter: blur(10px);
-    }
-    50% {
-        transform: scale(1.05) translateY(-10px) rotateX(-2deg);
-        opacity: 0.8;
-        filter: blur(2px);
-    }
-    100% {
-        transform: scale(1) translateY(0) rotateX(0deg);
-        opacity: 1;
-        filter: blur(0px);
-    }
-}
-
 .close-update-modal {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(255, 0, 0, 0.2);
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 0, 0, 0.1);
     border: 1px solid #ff0000;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #ff0000;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 10;
@@ -5695,335 +5677,45 @@ body.modal-open {
 }
 
 .close-update-modal:hover {
-    background: rgba(255, 0, 0, 0.4);
+    background: rgba(255, 0, 0, 0.2);
     color: #ffffff;
-    transform: rotate(180deg) scale(1.1);
+    transform: scale(1.1);
     box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
-    animation: cyberpunkGlitch 0.3s ease-in-out;
 }
 
-@keyframes cyberpunkGlitch {
-    0%, 100% { transform: rotate(180deg) scale(1.1); }
-    25% { transform: rotate(180deg) scale(1.1) translateX(2px); }
-    75% { transform: rotate(180deg) scale(1.1) translateX(-2px); }
-}
-
-/* Stare style usunięte - zastąpione nowymi prostymi stylami */
-
-.update-icon {
-    width: 90px;
-    height: 90px;
-    margin: 0 auto 25px;
-    background: 
-        radial-gradient(circle at 30% 30%, #ff0000 0%, #cc0000 50%, #000000 100%);
-    border: 3px solid #ff0000;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    color: #ffffff;
-    box-shadow: 
-        0 0 30px rgba(255, 0, 0, 0.6),
-        inset 0 0 20px rgba(255, 0, 0, 0.2);
-    animation: cyberpunkPulse 2s ease-in-out infinite;
-    position: relative;
-    transform-style: preserve-3d;
-}
-
-.update-icon::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    background: linear-gradient(45deg, #ff0000, transparent, #ff0000);
-    border-radius: 15px;
-    z-index: -1;
-    animation: cyberpunkRotate 4s linear infinite;
-}
-
-@keyframes cyberpunkPulse {
-    0%, 100% {
-        transform: scale(1) rotateY(0deg);
-        box-shadow: 
-            0 0 30px rgba(255, 0, 0, 0.6),
-            inset 0 0 20px rgba(255, 0, 0, 0.2);
+/* Responsive Design */
+@media (max-width: 600px) {
+    .update-modal-content {
+        width: 95%;
+        margin: 20px;
+        border-radius: 16px;
     }
-    50% {
-        transform: scale(1.1) rotateY(180deg);
-        box-shadow: 
-            0 0 50px rgba(255, 0, 0, 0.8),
-            inset 0 0 30px rgba(255, 0, 0, 0.4);
+    
+    .update-modal-content > .update-logo {
+        padding: 30px 30px 15px;
     }
-}
-
-@keyframes cyberpunkRotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.update-title {
-    font-size: 26px;
-    font-weight: 900;
-    color: #ffffff;
-    margin: 0 0 15px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 
-        0 0 10px rgba(255, 0, 0, 0.8),
-        0 0 20px rgba(255, 0, 0, 0.4),
-        0 0 30px rgba(255, 0, 0, 0.2);
-    animation: cyberpunkGlow 2s ease-in-out infinite alternate;
-    font-family: 'Courier New', monospace;
-}
-
-@keyframes cyberpunkGlow {
-    0% {
-        text-shadow: 
-            0 0 10px rgba(255, 0, 0, 0.8),
-            0 0 20px rgba(255, 0, 0, 0.4),
-            0 0 30px rgba(255, 0, 0, 0.2);
+    
+    .update-title {
+        font-size: 24px;
+        margin: 25px 30px 8px;
     }
-    100% {
-        text-shadow: 
-            0 0 15px rgba(255, 0, 0, 1),
-            0 0 25px rgba(255, 0, 0, 0.6),
-            0 0 35px rgba(255, 0, 0, 0.4);
+    
+    .update-version-info {
+        margin: 0 30px 25px;
     }
-}
-
-.update-version-info {
-    color: #cccccc;
-    font-size: 16px;
-    margin: 0;
-    line-height: 1.6;
-    font-family: 'Courier New', monospace;
-    text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
-}
-
-.update-body {
-    padding: 30px;
-    background: #000000;
-}
-
-.update-changelog {
-    margin-bottom: 25px;
-}
-
-.update-changelog h4 {
-    color: #ff0000;
-    font-size: 18px;
-    font-weight: 700;
-    margin: 0 0 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-family: 'Courier New', monospace;
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-}
-
-.changelog-content {
-    background: #000000;
-    border: 1px solid #ff0000;
-    border-radius: 8px;
-    padding: 20px;
-    border-left: 4px solid #ff0000;
-    color: #ffffff;
-    line-height: 1.8;
-    font-size: 14px;
-    font-family: 'Courier New', monospace;
-    box-shadow: 
-        inset 0 0 20px rgba(255, 0, 0, 0.1),
-        0 0 15px rgba(255, 0, 0, 0.2);
-    position: relative;
-}
-
-.changelog-content::before {
-    content: '>';
-    position: absolute;
-    left: 8px;
-    top: 8px;
-    color: #ff0000;
-    font-weight: bold;
-    animation: cyberpunkBlink 1.5s infinite;
-}
-
-@keyframes cyberpunkBlink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-}
-
-.update-progress {
-    margin: 25px 0;
-}
-
-.progress-bar {
-    width: 100%;
-    height: 12px;
-    background: #000000;
-    border: 1px solid #ff0000;
-    border-radius: 6px;
-    overflow: hidden;
-    margin-bottom: 15px;
-    box-shadow: 
-        inset 0 0 10px rgba(0, 0, 0, 0.8),
-        0 0 10px rgba(255, 0, 0, 0.3);
-}
-
-.progress-fill {
-    height: 100%;
-    background: 
-        linear-gradient(90deg, #ff0000 0%, #ff3333 50%, #ff0000 100%);
-    border-radius: 4px;
-    width: 0%;
-    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
-}
-
-.progress-fill::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        repeating-linear-gradient(
-            90deg,
-            transparent 0px,
-            rgba(255, 255, 255, 0.2) 2px,
-            transparent 4px
-        );
-    animation: cyberpunkProgress 1s linear infinite;
-}
-
-.progress-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
-    animation: cyberpunkShimmer 2s ease-in-out infinite;
-}
-
-@keyframes cyberpunkProgress {
-    0% { background-position: 0px 0px; }
-    100% { background-position: 20px 0px; }
-}
-
-@keyframes cyberpunkShimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
-
-.progress-text {
-    text-align: center;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: 'Courier New', monospace;
-    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-    letter-spacing: 1px;
-}
-
-.update-footer {
-    padding: 25px 30px 35px;
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    background: #000000;
-    border-top: 2px solid #ff0000;
-}
-
-.update-download-btn,
-.update-later-btn {
-    padding: 15px 30px;
-    border: 2px solid #ff0000;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    min-width: 160px;
-    justify-content: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-family: 'Courier New', monospace;
-    position: relative;
-    overflow: hidden;
-}
-
-.update-download-btn {
-    background: 
-        linear-gradient(135deg, #ff0000 0%, #cc0000 50%, #ff0000 100%);
-    color: #ffffff;
-    box-shadow: 
-        0 0 20px rgba(255, 0, 0, 0.5),
-        inset 0 0 20px rgba(255, 255, 255, 0.1);
-}
-
-.update-download-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.5s ease;
-}
-
-.update-download-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 
-        0 0 30px rgba(255, 0, 0, 0.8),
-        inset 0 0 30px rgba(255, 255, 255, 0.2);
-    animation: cyberpunkButtonGlow 0.3s ease-in-out;
-}
-
-.update-download-btn:hover::before {
-    left: 100%;
-}
-
-@keyframes cyberpunkButtonGlow {
-    0%, 100% { box-shadow: 0 0 30px rgba(255, 0, 0, 0.8); }
-    50% { box-shadow: 0 0 50px rgba(255, 0, 0, 1); }
-}
-
-.update-download-btn:active {
-    transform: translateY(-1px) scale(1.02);
-}
-
-.update-download-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-    animation: none;
-}
-
-.update-later-btn {
-    background: rgba(0, 0, 0, 0.8);
-    color: #ff0000;
-    border: 2px solid rgba(255, 0, 0, 0.5);
-}
-
-.update-later-btn:hover {
-    background: rgba(255, 0, 0, 0.1);
-    color: #ffffff;
-    border-color: #ff0000;
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+    
+    .update-changelog {
+        margin: 0 30px 25px;
+    }
+    
+    .update-progress {
+        margin: 20px 30px;
+    }
+    
+    .update-btn {
+        margin: 0 30px 30px;
+        padding: 14px 28px;
+    }
 }
 
 /* Responsive */
@@ -6101,291 +5793,224 @@ body.dark-theme .update-modal-content {
     color: #fff;
 }
 
-/* Logo AstroWorld */
-.update-logo {
-    margin-bottom: 20px;
+/* Header Section */
+.update-modal-content > .update-logo {
+    padding: 40px 40px 20px;
+    background: #000000;
+    margin: 0;
+    border-radius: 20px 20px 0 0;
 }
 
 .update-logo img {
-    filter: drop-shadow(0 0 10px rgba(255, 0, 51, 0.5));
-    animation: logoGlow 2s ease-in-out infinite alternate;
-    border-radius: 8px;
-}
-
-@keyframes logoGlow {
-    0% { filter: drop-shadow(0 0 10px rgba(255, 0, 51, 0.5)); }
-    100% { filter: drop-shadow(0 0 20px rgba(255, 0, 51, 0.8)); }
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
 }
 
 /* Tytuł */
 .update-title {
-    color: #fff;
-    font-size: 24px;
+    color: #ffffff;
+    font-size: 28px;
     font-weight: 700;
-    margin: 0 0 10px 0;
-    text-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
+    margin: 30px 40px 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
 }
 
 .update-version-info {
-    color: #ccc;
+    color: #cccccc;
     font-size: 16px;
-    margin: 0 0 25px 0;
+    margin: 0 40px 30px;
+    font-weight: 500;
 }
 
 /* Changelog */
 .update-changelog {
-    margin-bottom: 30px;
+    margin: 0 40px 30px;
     text-align: left;
 }
 
 .changelog-content {
-    background: rgba(255, 0, 51, 0.1);
-    border: 1px solid rgba(255, 0, 51, 0.3);
-    border-radius: 8px;
-    padding: 15px;
-    color: #fff;
+    background: #111111;
+    border: 1px solid #ff0000;
+    border-radius: 12px;
+    padding: 20px;
+    color: #ffffff;
     font-size: 14px;
-    line-height: 1.5;
-    max-height: 150px;
+    line-height: 1.6;
+    max-height: 160px;
     overflow-y: auto;
+    box-shadow: 
+        inset 0 0 20px rgba(255, 0, 0, 0.1),
+        0 0 15px rgba(255, 0, 0, 0.2);
+}
+
+.changelog-content div {
+    margin-bottom: 8px;
+    padding-left: 16px;
+    position: relative;
+}
+
+.changelog-content div::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #ff0000;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
 }
 
 /* Pasek postępu */
 .update-progress {
-    margin: 20px 0;
+    margin: 20px 40px;
 }
 
 .progress-bar {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    height: 8px;
+    background: #222222;
+    border: 1px solid #ff0000;
+    border-radius: 12px;
+    height: 10px;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    box-shadow: 
+        inset 0 0 10px rgba(0, 0, 0, 0.8),
+        0 0 10px rgba(255, 0, 0, 0.3);
 }
 
 .progress-fill {
-    background: linear-gradient(90deg, #ff0033, #ff3366);
+    background: linear-gradient(90deg, #ff0000, #ff3333, #ff0000);
     height: 100%;
     width: 0%;
-    transition: width 0.3s ease;
-    box-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
+    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
 }
 
 .progress-text {
-    color: #fff;
+    color: #ffffff;
     font-size: 14px;
     text-align: center;
+    font-weight: 500;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* Style dla napisu po zakończeniu pobierania */
+.progress-text.completed {
+    color: #00ff00;
+    font-size: 16px;
+    font-weight: 700;
+    text-shadow: 
+        0 0 10px rgba(0, 255, 0, 0.8),
+        0 0 20px rgba(0, 255, 0, 0.4);
+    animation: completedGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes completedGlow {
+    0% {
+        text-shadow: 
+            0 0 10px rgba(0, 255, 0, 0.8),
+            0 0 20px rgba(0, 255, 0, 0.4);
+    }
+    100% {
+        text-shadow: 
+            0 0 15px rgba(0, 255, 0, 1),
+            0 0 30px rgba(0, 255, 0, 0.6),
+            0 0 40px rgba(0, 255, 0, 0.3);
+    }
 }
 
 /* Przycisk aktualizacji */
 .update-btn {
-    background: linear-gradient(135deg, #ff0033, #cc0029);
-    border: none;
-    color: #fff;
-    padding: 15px 30px;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    border: 2px solid #ff0000;
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 12px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 0, 51, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 
+        0 4px 15px rgba(255, 0, 0, 0.4),
+        0 0 20px rgba(255, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 100%;
+    margin: 0 auto 40px;
+    max-width: 280px;
+    width: calc(100% - 80px);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .update-btn:hover {
-    background: linear-gradient(135deg, #ff3366, #ff0033);
+    background: linear-gradient(135deg, #ff3333, #ff0000);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 0, 51, 0.5);
+    box-shadow: 
+        0 8px 25px rgba(255, 0, 0, 0.6),
+        0 0 30px rgba(255, 0, 0, 0.5);
 }
 
 .update-btn:active {
     transform: translateY(0);
+    box-shadow: 
+        0 4px 15px rgba(255, 0, 0, 0.4),
+        0 0 20px rgba(255, 0, 0, 0.3);
 }
 
 .update-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
-}
-
-/* ===============================================
-   🔥 CYBERPUNK ADDITIONAL EFFECTS
-   =============================================== */
-
-/* Glitch effect for modal */
-.update-modal-content.glitch {
-    animation: cyberpunkGlitchModal 0.3s ease-in-out;
-}
-
-@keyframes cyberpunkGlitchModal {
-    0%, 100% { transform: scale(1) translateY(0); }
-    10% { transform: scale(1.01) translateY(-2px) translateX(2px); }
-    20% { transform: scale(0.99) translateY(1px) translateX(-1px); }
-    30% { transform: scale(1.01) translateY(-1px) translateX(1px); }
-    40% { transform: scale(0.99) translateY(2px) translateX(-2px); }
-    50% { transform: scale(1.01) translateY(-2px) translateX(1px); }
-    60% { transform: scale(0.99) translateY(1px) translateX(-1px); }
-    70% { transform: scale(1.01) translateY(-1px) translateX(2px); }
-    80% { transform: scale(0.99) translateY(2px) translateX(-1px); }
-    90% { transform: scale(1.01) translateY(-1px) translateX(1px); }
-}
-
-/* Cyberpunk scanlines */
-.update-modal-content::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        repeating-linear-gradient(
-            0deg,
-            transparent 0px,
-            rgba(255, 0, 0, 0.03) 1px,
-            transparent 2px,
-            transparent 4px
-        );
-    pointer-events: none;
-    z-index: 1000;
-    animation: cyberpunkScanlines 0.1s linear infinite;
-}
-
-@keyframes cyberpunkScanlines {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(4px); }
-}
-
-/* Matrix-style text effect */
-.update-title::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 2px;
-    top: 2px;
-    color: rgba(255, 0, 0, 0.3);
-    z-index: -1;
-    animation: cyberpunkTextGlitch 3s ease-in-out infinite;
-}
-
-@keyframes cyberpunkTextGlitch {
-    0%, 90%, 100% { opacity: 0; }
-    5%, 85% { opacity: 1; transform: translateX(0); }
-    10% { transform: translateX(-2px); }
-    15% { transform: translateX(2px); }
-    20% { transform: translateX(-1px); }
-    25% { transform: translateX(1px); }
-}
-
-/* Cyberpunk loading animation */
-.cyberpunk-loading {
-    display: inline-block;
-    animation: cyberpunkLoadingDots 1.5s ease-in-out infinite;
-}
-
-@keyframes cyberpunkLoadingDots {
-    0%, 80%, 100% { opacity: 0; }
-    40% { opacity: 1; }
-}
-
-/* Red glow for interactive elements */
-.update-modal input,
-.update-modal button,
-.update-modal select {
-    box-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease;
-}
-
-.update-modal input:focus,
-.update-modal button:hover,
-.update-modal select:focus {
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
-}
-
-/* Responsive cyberpunk adjustments */
-@media (max-width: 600px) {
-    .update-modal-content {
-        width: 95%;
-        margin: 10px;
-        border-radius: 10px;
-    }
-    
-    .update-header {
-        padding: 30px 20px 20px;
-    }
-    
-    .update-body {
-        padding: 20px;
-    }
-    
-    .update-footer {
-        padding: 20px 20px 30px;
-        flex-direction: column;
-    }
-    
-    .update-download-btn,
-    .update-later-btn {
-        width: 100%;
-        min-width: auto;
-    }
-    
-    .update-title {
-        font-size: 22px;
-    }
-    
-    .update-icon {
-        width: 70px;
-        height: 70px;
-        font-size: 32px;
-    }
-}
-
-/* Dark theme compatibility - enhanced for cyberpunk */
-body.dark-theme .update-modal-content {
-    background: 
-        linear-gradient(135deg, #000000 0%, #0a0000 25%, #000000 50%, #0a0000 75%, #000000 100%);
-    border-color: #ff0000;
     box-shadow: 
-        0 0 60px rgba(255, 0, 0, 0.6),
-        0 0 120px rgba(255, 0, 0, 0.3),
-        inset 0 0 60px rgba(255, 0, 0, 0.1);
+        0 4px 15px rgba(255, 0, 0, 0.2),
+        0 0 10px rgba(255, 0, 0, 0.1);
 }
 
-/* Animation for showing/hiding - cyberpunk style */
-.update-modal.hidden {
-    pointer-events: none;
+/* Dark theme compatibility */
+body.dark-theme .update-modal-content {
+    background: #000000;
+    border-color: #ff0000;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9);
 }
 
-.update-modal:not(.hidden) {
-    pointer-events: all;
+body.dark-theme .update-title {
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
 }
 
-/* Cyberpunk particle effect */
-.update-modal-overlay::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        radial-gradient(2px 2px at 20px 30px, rgba(255, 0, 0, 0.3), transparent),
-        radial-gradient(2px 2px at 40px 70px, rgba(255, 0, 0, 0.2), transparent),
-        radial-gradient(1px 1px at 90px 40px, rgba(255, 0, 0, 0.4), transparent),
-        radial-gradient(1px 1px at 130px 80px, rgba(255, 0, 0, 0.2), transparent),
-        radial-gradient(2px 2px at 160px 30px, rgba(255, 0, 0, 0.3), transparent);
-    background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: cyberpunkParticles 20s linear infinite;
-    opacity: 0.6;
+body.dark-theme .update-version-info {
+    color: #cccccc;
 }
 
-@keyframes cyberpunkParticles {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(-100px); }
+body.dark-theme .changelog-content {
+    background: #0a0a0a;
+    border-color: #ff0000;
+    color: #ffffff;
+    box-shadow: 
+        inset 0 0 30px rgba(255, 0, 0, 0.15),
+        0 0 1px rgba(255, 0, 0, 0.25);
+}
+
+body.dark-theme .progress-bar {
+    background: #1a1a1a;
+    border-color: #ff0000;
+}
+
+body.dark-theme .progress-text {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+}
+
+body.dark-theme .progress-text.completed {
+    color: #00ff88;
+    text-shadow: 
+        0 0 12px rgba(0, 255, 136, 0.9),
+        0 0 25px rgba(0, 255, 136, 0.5),
+        0 0 35px rgba(0, 255, 136, 0.3);
 }
 
 /* === KALENDARZ PREMIER STYLES === */
