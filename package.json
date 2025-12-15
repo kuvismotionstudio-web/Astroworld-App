@@ -1,6 +1,6 @@
 {
   "name": "astro",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Aplikacja desktopowa zbudowana z użyciem Electrona",
   "main": "main.js",
   "scripts": {
@@ -32,6 +32,7 @@
     "@lottiefiles/lottie-player": "^2.0.12",
     "@types/react": "^19.1.10",
     "aos": "^2.3.4",
+    "bencode": "^4.0.0",
     "color": "^4.2.3",
     "cors": "^2.8.5",
     "discord-rpc": "^4.0.1",
@@ -40,6 +41,7 @@
     "gsap": "^3.13.0",
     "i18next": "^23.7.6",
     "lottie-web": "^5.13.0",
+    "parse-torrent": "^11.0.19",
     "sharp": "^0.34.3",
     "tsparticles": "^3.8.1",
     "webtorrent": "^2.8.4"
